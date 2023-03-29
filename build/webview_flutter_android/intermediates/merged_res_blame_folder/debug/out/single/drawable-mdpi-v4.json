@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notify_panel_notification_icon_bg.png",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_normal.9.png",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_normal_pressed.9.png",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_low_pressed.9.png",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_low_normal.9.png",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+    }
+]

@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_light_focused.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_light.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_dark_normal.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_dark_focused.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_disabled.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/notification_bg.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_light.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_dark_normal.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_light_focused.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_disabled.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_disabled.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_dark_focused.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_text_light_normal.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_light_normal.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/common_google_signin_btn_icon_dark.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/d789e8ec9d4eb15cc8323809ff3dcea4/transformed/jetified-play-services-base-18.0.1/res/drawable/common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "/Users/vivekkumar/Desktop/eshop_target/eShop MultiVendor Project V2.3.0/MultiVendor Seller App V2.3.0/build/google_maps_flutter_android/intermediates/merged_res/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/vivekkumar/.gradle/caches/transforms-3/6ea4188558c013470710acfcd830dc4d/transformed/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    }
+]
