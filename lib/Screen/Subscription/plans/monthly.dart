@@ -262,120 +262,116 @@ class _MonthlyDataState extends State<MonthlyData> {
               return GestureDetector(
                 onTap: () async {
                   var response = await MyFatoorah.startPayment(
-                      context: contexty,
+                    context: contexty,
                     request: myfatoora.paymentMode == "test"
                         ? MyfatoorahRequest.test(
-                        currencyIso: () {
-                          print("wearehere at test ==> 1");
-                          if (myfatoora.myfatooraCountry == 'Kuwait') {
-                            return Country.Kuwait;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'UAE') {
-                            return Country.UAE;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Egypt') {
-                            return Country.Egypt;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Bahrain') {
-                            return Country.Bahrain;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Jordan') {
-                            return Country.Jordan;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Oman') {
-                            return Country.Oman;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'SaudiArabia') {
-                            return Country.SaudiArabia;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'SaudiArabia') {
-                            return Country.Qatar;
-                          }
-                          return Country.SaudiArabia;
-                        }(),
-                        successUrl: successUrl,
-                        errorUrl: errorUrl,
-                        invoiceAmount: double.parse(amount),
-                        language: () {
-                          print("wearehere at test ==> 2");
-                          if (myfatoora.myfatooralanguage == 'english') {
-                            return ApiLanguage.English;
-                          }
-                          return ApiLanguage.Arabic;
-                        }(),
-                        token: token
-                      //'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',//
-                    )
+                            currencyIso: () {
+                              print("wearehere at test ==> 1");
+                              if (myfatoora.myfatooraCountry == 'Kuwait') {
+                                return Country.Kuwait;
+                              } else if (myfatoora.myfatooraCountry == 'UAE') {
+                                return Country.UAE;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Egypt') {
+                                return Country.Egypt;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Bahrain') {
+                                return Country.Bahrain;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Jordan') {
+                                return Country.Jordan;
+                              } else if (myfatoora.myfatooraCountry == 'Oman') {
+                                return Country.Oman;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'SaudiArabia') {
+                                return Country.SaudiArabia;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'SaudiArabia') {
+                                return Country.Qatar;
+                              }
+                              return Country.SaudiArabia;
+                            }(),
+                            successUrl: successUrl,
+                            errorUrl: errorUrl,
+                            invoiceAmount: double.parse(amount),
+                            language: () {
+                              print("wearehere at test ==> 2");
+                              if (myfatoora.myfatooralanguage == 'english') {
+                                return ApiLanguage.English;
+                              }
+                              return ApiLanguage.Arabic;
+                            }(),
+                            token: token
+                            //'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',//
+                            )
                         : MyfatoorahRequest.live(
-                        currencyIso: () {
-                          if (myfatoora.myfatooraCountry == 'Kuwait') {
-                            return Country.Kuwait;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'UAE') {
-                            return Country.UAE;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Egypt') {
-                            return Country.Egypt;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Bahrain') {
-                            return Country.Bahrain;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Jordan') {
-                            return Country.Jordan;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'Oman') {
-                            return Country.Oman;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'SaudiArabia') {
-                            return Country.SaudiArabia;
-                          } else if (myfatoora.myfatooraCountry ==
-                              'SaudiArabia') {
-                            return Country.Qatar;
-                          }
-                          return Country.SaudiArabia;
-                        }(),
-                        successUrl: successUrl,
-                        errorUrl: errorUrl,
-                        userDefinedField: orderID,
-                        invoiceAmount: double.parse(amount),
-                        language: () {
-                          if (myfatoora.myfatooralanguage == 'english') {
-                            return ApiLanguage.English;
-                          }
-                          return ApiLanguage.Arabic;
-                        }(),
-                        token: myfatoora.token
-                   //   'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',//
-                    ),
-                      successChild: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Payment Done Successfully",
-                              style: const TextStyle(
-                                fontFamily: 'ubuntu',
-                              ),
+                            currencyIso: () {
+                              if (myfatoora.myfatooraCountry == 'Kuwait') {
+                                return Country.Kuwait;
+                              } else if (myfatoora.myfatooraCountry == 'UAE') {
+                                return Country.UAE;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Egypt') {
+                                return Country.Egypt;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Bahrain') {
+                                return Country.Bahrain;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'Jordan') {
+                                return Country.Jordan;
+                              } else if (myfatoora.myfatooraCountry == 'Oman') {
+                                return Country.Oman;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'SaudiArabia') {
+                                return Country.SaudiArabia;
+                              } else if (myfatoora.myfatooraCountry ==
+                                  'SaudiArabia') {
+                                return Country.Qatar;
+                              }
+                              return Country.SaudiArabia;
+                            }(),
+                            successUrl: successUrl,
+                            errorUrl: errorUrl,
+                            userDefinedField: orderID,
+                            invoiceAmount: double.parse(amount),
+                            language: () {
+                              if (myfatoora.myfatooralanguage == 'english') {
+                                return ApiLanguage.English;
+                              }
+                              return ApiLanguage.Arabic;
+                            }(),
+                            token: myfatoora.token
+                            //   'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',//
                             ),
-                            const SizedBox(
-                              width: 200,
-                              height: 100,
-                              child: Icon(
-                                Icons.done,
-                                size: 100,
-                                color: Colors.green,
-                              ),
+                    successChild: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Payment Done Successfully",
+                            style: const TextStyle(
+                              fontFamily: 'ubuntu',
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            width: 200,
+                            height: 100,
+                            child: Icon(
+                              Icons.done,
+                              size: 100,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
                       ),
-
+                    ),
                   );
-                  print('reposneee ${successUrl} ${errorUrl}' + response.paymentId.toString());
+                  print('reposneee ${successUrl} ${errorUrl}' +
+                      response.paymentId.toString());
                   if (response.status.toString() == 'PaymentStatus.Success') {
                     //  context.read<CartProvider>().setProgress(true);
-
+                     // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                     await updateOrderStatus(
                       orderID: orderId,
                       status: "received",
@@ -391,14 +387,15 @@ class _MonthlyDataState extends State<MonthlyData> {
                     );
                   }
                   if (response.status.toString() == 'PaymentStatus.None') {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(response.status
-                            .toString())));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(response.status.toString())));
                     // deleteOrder(orderId);
                     //
                   }
-                  if(response.isError){
-                    print("erroooeer "+response.url.toString() +  response.isError.toString());
+                  if (response.isError) {
+                    print("erroooeer " +
+                        response.url.toString() +
+                        response.isError.toString());
                   }
                   ;
                 },

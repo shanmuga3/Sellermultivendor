@@ -10,6 +10,7 @@ import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:sellermultivendor/Screen/Authentication/Login.dart';
+import 'package:sellermultivendor/Widget/snackbar.dart';
 import '../../Helper/ApiBaseHelper.dart';
 import '../../Helper/Color.dart';
 import '../../Helper/Constant.dart';
@@ -41,36 +42,15 @@ class _SellerRegisterState extends State<SellerRegister>
   GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController nameController = TextEditingController();
-  //TextEditingController mobilenumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  // TextEditingController addressController = TextEditingController();
-  // TextEditingController storeController = TextEditingController();
-  // TextEditingController storeUrlController = TextEditingController();
-  // TextEditingController storeDescriptionController = TextEditingController();
-  // TextEditingController taxNameController = TextEditingController();
-  // TextEditingController taxNumberController = TextEditingController();
-  // TextEditingController panNumberController = TextEditingController();
-  // TextEditingController accountNumberController = TextEditingController();
-  // TextEditingController accountNameController = TextEditingController();
-  // TextEditingController bankCodeController = TextEditingController();
-  // TextEditingController bankNameController = TextEditingController();
+
    FocusNode? nameFocus,
       emailFocus,
       passFocus,
       confirmPassFocus,
-      //addressFocus,
-    //  storeFocus,
-     // storeUrlFocus,
-     // storeDescriptionFocus,
-      //taxNameFocus,
-     // taxNumberFocus,
-    //  panNumberFocus,
-    //  accountNumberFocus,
-   //   accountNameFocus,
-   //   bankCodeFocus,
-  //    bankNameFocus,
+
       monumberFocus = FocusNode();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   Animation? buttonSqueezeanimation;
@@ -83,20 +63,7 @@ class _SellerRegisterState extends State<SellerRegister>
       email,
       password,
       confirmpassword;
-      // address,
-      // addressproof,
-      // nationalidentitycard,
-      // storename,
-      // storelogo,
-      // storeurl,
-      // storedescription,
-      // taxname,
-      // taxnumber,
-      // pannumber,
-      // accountnumber,
-      // accountname,
-      // bankcode,
-      // bankname;
+
 
 //==============================================================================
 //============================= INIT Method ====================================
@@ -127,39 +94,45 @@ class _SellerRegisterState extends State<SellerRegister>
   Future<void> sellerRegisterAPI() async {
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
-      try {
-        var request = http.MultipartRequest("POST", registerApi);
-        request.headers.addAll(headers);
-        request.fields[MOBILE] = widget.mobileno.toString();
-        request.fields[Name] = name!;
-        //request.fields[Mobile] = mobile!;
-        request.fields[Password] = password!;
-        request.fields[EmailText] = email!;
-        request.fields[ConfirmPassword] = confirmpassword!;
-        for (var key in request.fields.keys) {
-          print('here=>>>> $key: ${request.fields[key]}');
+      if(password.toString() == confirmpassword.toString()){
+        try {
+          var request = http.MultipartRequest("POST", registerApi);
+          request.headers.addAll(headers);
+          request.fields[MOBILE] = widget.mobileno.toString();
+          request.fields[Name] = name!;
+          //request.fields[Mobile] = mobile!;
+          request.fields[Password] = password!;
+          request.fields[EmailText] = email!;
+          request.fields[ConfirmPassword] = confirmpassword!;
+          for (var key in request.fields.keys) {
+            print('here=>>>> $key: ${request.fields[key]}');
+          }
+          var response = await request.send();
+          var responseData = await response.stream.toBytes();
+          var responseString = String.fromCharCodes(responseData);
+          print('Response Data: ' + responseString.toString() + registerApi.toString());
+          var getdata = json.decode(responseString);
+          bool error = getdata["error"];
+          String? msg = getdata['message'];
+          if (!error) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+            Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
+            await buttonController!.reverse();
+          } else {
+            await buttonController!.reverse();
+            showMsgDialog(msg!);
+          }
+        } on TimeoutException catch (_) {
+          showOverlay(
+            getTranslated(context, 'somethingMSg')!,
+            context,
+          );
         }
-        var response = await request.send();
-        var responseData = await response.stream.toBytes();
-        var responseString = String.fromCharCodes(responseData);
-        print('Response Data: ' + responseString.toString() + registerApi.toString());
-        var getdata = json.decode(responseString);
-        bool error = getdata["error"];
-        String? msg = getdata['message'];
-        if (!error) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-          Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
-          await buttonController!.reverse();
-        } else {
-          await buttonController!.reverse();
-          showMsgDialog(msg!);
-        }
-      } on TimeoutException catch (_) {
-        showOverlay(
-          getTranslated(context, 'somethingMSg')!,
-          context,
-        );
       }
+      else{
+        setSnackbar("Password does not match !", context);
+      }
+
     } else {
       if (mounted) {
         setState(
