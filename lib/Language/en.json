@@ -42,6 +42,7 @@
   "noItem": "No Item Found..!!",
   "SEND_VERIFY_CODE_LBL":"We will send a Verification Code to This Number",
   "SEND_OTP_TITLE":"send otp",
+  "SIGN_UP_LBL": "Sign Up",
   "MOBILEHINT_LBL":"Mobile number",
   "COUNTRY_CODE_LBL":"Select country code",
   "SEND_OTP":"Send OTP",

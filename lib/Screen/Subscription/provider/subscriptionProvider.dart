@@ -30,7 +30,8 @@ class SubscriptionProvider extends ChangeNotifier {
     print('hreee2'+"selllerid"+ context.read<SettingProvider>().CUR_USERID.toString());
     ApiBaseHelper().postAPICall(checkSubscription, parameter).then((getData) async{
       _checkSubscriptionData = getData["data"];
-      _subscription_name = getData["data"][0]["subscription_name"];
+      final data = getData["data"];
+      _subscription_name = data["subscription_name"];
       print("nameisssss ${_subscription_name}");
     //  _startDate = getData["data"][0]["start_date"].toString();
       bool isSubscribed = _checkSubscriptionData.isNotEmpty;
@@ -46,6 +47,8 @@ class SubscriptionProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+
 }
 //
 //

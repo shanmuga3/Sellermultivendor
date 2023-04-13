@@ -13,6 +13,7 @@ import '../../../Widget/routes.dart';
 import '../../ProductList/ProductList.dart';
 import '../../Subscription/selectPlan.dart';
 import '../../WalletHistory/WalletHistory.dart';
+import '../../completeinfo/sellerRegister.dart';
 
 boxesDesingHome(
   String svg,
@@ -141,10 +142,7 @@ boxesDesingHome1(
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => ProductList(
-                flag: "sold",
-                fromNavbar: false,
-              ),
+              builder: (context) => CompleteInfoPage()
             ),
           );
       },

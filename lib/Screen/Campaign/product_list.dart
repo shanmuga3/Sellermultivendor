@@ -45,7 +45,7 @@ class StateProduct extends State<Product_List>
   List<Product> selectedProducts = [];
   List<Product> finalselectedProducts = [];
 
-
+  TextEditingController searchController = TextEditingController();
 
   setStateNow() {
     setState(() {});
@@ -90,12 +90,15 @@ class StateProduct extends State<Product_List>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      key: productListProvider!.scaffoldKey,
+     // key: productListProvider!.scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text(
           "Add Products",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        leading: const BackButton(
+          color: Colors.white, // <-- SEE HERE
         ),
       ),
       body: _isLoading
@@ -125,15 +128,13 @@ class StateProduct extends State<Product_List>
                           TextFormField(
                             controller: _titleController,
                             decoration: InputDecoration(
-                              hintText: 'Enter title',
+                              hintText: 'Enter campaign title',
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.0))),
                             ),
                             validator: (value) {
-                              if (_titleController.text.isEmpty ?? true) {
-
-                              }
+                              if (_titleController.text.isEmpty ?? true) {}
                               return null;
                             },
                           ),
@@ -155,7 +156,7 @@ class StateProduct extends State<Product_List>
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4.0))),
-                              hintText: 'Enter description',
+                              hintText: 'Enter campaign description',
                             ),
                             validator: (value) {
                               if (_descriptionController.text.isEmpty ?? true) {
@@ -164,32 +165,30 @@ class StateProduct extends State<Product_List>
                               return null;
                             },
                           ),
-
                         ],
                       ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: selectedProducts.length,
-                        itemBuilder: (context, index) {
-                          Product product = selectedProducts[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, bottom: 3),
-                            child: Card(
-                              color: Colors.purple.shade100,
-                              child: ListTile(
-                                  title: Text(product.name.toString()  ,   style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "PlusJakartaSans",
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: textFontSize14,
-                                  ),),
-                                  subtitle: Row(
-                                    children: <Widget>[
-                                      Text(
-                                          "${getTranslated(context, 'PRICE_LBL')} : ",
+                      child: selectedProducts.isEmpty
+                          ? Container(
+                              child: Center(
+                                  child: Text(
+                                "No products to show",
+                                style: TextStyle(fontSize: 15),
+                              )),
+                            )
+                          : ListView.builder(
+                              itemCount: selectedProducts.length,
+                              itemBuilder: (context, index) {
+                                Product product = selectedProducts[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8, right: 8, bottom: 3),
+                                  child: Card(
+                                    color: Colors.purple.shade100,
+                                    child: ListTile(
+                                        title: Text(
+                                          product.name.toString(),
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -197,68 +196,84 @@ class StateProduct extends State<Product_List>
                                             fontStyle: FontStyle.normal,
                                             fontSize: textFontSize14,
                                           ),
-                                          textAlign: TextAlign.left),
-                                      product.prVarientList!.isNotEmpty
-                                          ? Text(
-                                              double.parse(product
-                                                          .prVarientList![
-                                                              product
-                                                                  .selVarient!]
-                                                          .disPrice!) !=
-                                                      0
-                                                  ? DesignConfiguration
-                                                      .getPriceFormat(
-                                                      context,
-                                                      double.parse(product
-                                                          .prVarientList![
-                                                              product
-                                                                  .selVarient!]
-                                                          .disPrice!),
-                                                    )!
-                                                  : "",
-                                              style: TextStyle(
+                                        ),
+                                        subtitle: Row(
+                                          children: <Widget>[
+                                            Text(
+                                                "${getTranslated(context, 'PRICE_LBL')} : ",
+                                                style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: "PlusJakartaSans",
                                                   fontStyle: FontStyle.normal,
-                                                  fontSize: textFontSize14),
-                                            )
-                                          : Container(),
-                                    ],
+                                                  fontSize: textFontSize14,
+                                                ),
+                                                textAlign: TextAlign.left),
+                                            product.prVarientList!.isNotEmpty
+                                                ? Text(
+                                                    double.parse(product
+                                                                .prVarientList![
+                                                                    product
+                                                                        .selVarient!]
+                                                                .disPrice!) !=
+                                                            0
+                                                        ? DesignConfiguration
+                                                            .getPriceFormat(
+                                                            context,
+                                                            double.parse(product
+                                                                .prVarientList![
+                                                                    product
+                                                                        .selVarient!]
+                                                                .disPrice!),
+                                                          )!
+                                                        : "",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily:
+                                                            "PlusJakartaSans",
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontSize:
+                                                            textFontSize14),
+                                                  )
+                                                : Container(),
+                                          ],
+                                        ),
+                                        trailing: IconButton(
+                                          icon: Icon(Icons.close),
+                                          onPressed: () {
+                                            setState(() {
+                                              selectedProducts.remove(product);
+                                            });
+                                          },
+                                        ),
+                                        leading: Hero(
+                                          tag:
+                                              "$index${product.id}+ $index${product.name}",
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                circularBorderRadius5),
+                                            child: DesignConfiguration
+                                                .getCacheNotworkImage(
+                                              boxFit: BoxFit.cover,
+                                              context: context,
+                                              heightvalue: 70.0,
+                                              placeHolderSize: 70.0,
+                                              imageurlString: product.image!,
+                                              widthvalue: 70.0,
+                                            ),
+                                          ),
+                                        )),
                                   ),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      setState(() {
-                                        selectedProducts.remove(product);
-                                      });
-                                    },
-                                  ),
-                                  leading: Hero(
-                                    tag:
-                                        "$index${product.id}+ $index${product.name}",
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          circularBorderRadius5),
-                                      child: DesignConfiguration
-                                          .getCacheNotworkImage(
-                                        boxFit: BoxFit.cover,
-                                        context: context,
-                                        heightvalue: 70.0,
-                                        placeHolderSize: 70.0,
-                                        imageurlString: product.image!,
-                                        widthvalue: 70.0,
-                                      ),
-                                    ),
-                                  )),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                     SizedBox(height: 16.0),
                     Padding(
-                      padding: const EdgeInsets.only(left: 12,right: 12),
+                      padding: const EdgeInsets.only(left: 12, right: 12),
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
@@ -269,16 +284,16 @@ class StateProduct extends State<Product_List>
                               width: MediaQuery.of(context).size.width / 1,
                               decoration: BoxDecoration(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(25)),
+                                      BorderRadius.all(Radius.circular(25)),
                                   gradient: LinearGradient(
                                       colors: [grad2Color, grad1Color])),
                               child: Center(
                                   child: Text(
-                                    "Add Products",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ))),
+                                "Add Products",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ))),
                         ),
                       ),
                     ),
@@ -288,16 +303,42 @@ class StateProduct extends State<Product_List>
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            if(_titleController.text.isEmpty || _descriptionController.text.isEmpty || selectedProducts.isEmpty){
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all the fields first"),dismissDirection: DismissDirection.down,));
-                            }else{
+                            if (_titleController.text.isEmpty ||
+                                _descriptionController.text.isEmpty ||
+                                selectedProducts.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text("Please fill all the fields first"),
+                                dismissDirection: DismissDirection.down,
+                              ));
+                            } else {
                               sendCampaignData();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => GestureDetector(
+                                        child: AlertDialog(
+                                          content: Text(
+                                              "Congratulations, Campaign Added Successfully"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Home()));
+                                                },
+                                                child: Text("Continue"))
+                                          ],
+                                        ),
+                                      ));
                             }
 
                             //Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                           },
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 12,right: 12),
+                            padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Container(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width / 1,
@@ -342,8 +383,8 @@ class StateProduct extends State<Product_List>
       //selectedProducts.toString(),
       'p_id2': selectedProducts[1].id.toString(),
       //selectedProducts[2].id.toString() ?? "0",
-      'p_id3':selectedProducts[2].id.toString(),
-      "start_date" : DateTime.now().toString(),
+      'p_id3': selectedProducts[2].id.toString(),
+      "start_date": DateTime.now().toString(),
       //selectedProducts[3].id.toString() ?? "0"
     };
     print('sendataa here ==>2');
@@ -380,8 +421,19 @@ class StateProduct extends State<Product_List>
   }
 
   Widget listItem(int index) {
-    if (index < productListProvider!.productList.length) {
-      Product? model = productListProvider!.productList[index];
+    List<Product> filteredProductList = [];
+    if (searchController.text.isNotEmpty) {
+      filteredProductList = productListProvider!.productList
+          .where((product) => product.name!
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
+          .toList();
+    } else {
+      filteredProductList = productListProvider!.productList;
+    }
+    if (index < filteredProductList.length) {
+      Product? model =
+          filteredProductList[index]; //productListProvider!.productList[index];
       productListProvider!.totalProduct = model.total;
       productListProvider!.items = List<String>.generate(
           model.totalAllow != "" ? int.parse(model.totalAllow!) : 10,
@@ -393,19 +445,18 @@ class StateProduct extends State<Product_List>
             )
           : Padding(
               padding: const EdgeInsets.only(right: 15.0, left: 15.0, top: 13),
-              child: SingleChildScrollView(
-                child: Consumer<ListTileColorProvider>(
-                    builder: (context, provider, index1) {
-                  bool isSelectedIndex =
-                      provider.selectedTileIndexes.contains(index);
-                  return Column(
-                    children: [
-                      Card(
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Consumer<ListTileColorProvider>(
+                        builder: (context, provider, index1) {
+                      bool isSelectedIndex =
+                          provider.selectedTileIndexes.contains(index);
+                      return Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                         margin: EdgeInsets.all(0),
-
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -420,33 +471,33 @@ class StateProduct extends State<Product_List>
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        content: Text("You can select only 3 products"),
+                                        content: Text(
+                                            "You can select only 3 products"),
                                         actions: [
                                           TextButton(
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: Text("Ok")
-                                          )
+                                              child: Text("Ok"))
                                         ],
                                       );
-                                    }
-                                );
+                                    });
                                 return;
                               }
                               provider.selectTile(index);
                             }
 
                             setState(() {
-                              model.isSelected = !model.isSelected; // toggle the isSelected flag
+                              model.isSelected = !model
+                                  .isSelected; // toggle the isSelected flag
                               // Check if the maximum number of selected products has been reached
-                              if (model.isSelected && selectedProducts.length < 3) {
+                              if (model.isSelected &&
+                                  selectedProducts.length < 3) {
                                 selectedProducts.add(model);
-
                               } else if (!model.isSelected) {
                                 selectedProducts.remove(model);
                               }
-                             // print("finalllll $finalSelectedProducts");
+                              // print("finalllll $finalSelectedProducts");
                             });
                           },
 
@@ -522,10 +573,10 @@ class StateProduct extends State<Product_List>
                             ],
                           ),
                         ),
-                      )
-                    ],
-                  );
-                }),
+                      );
+                    }),
+                  ),
+                ],
               ),
             );
     } else {
@@ -559,24 +610,45 @@ class StateProduct extends State<Product_List>
       ),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: height / 2,
-          child: ListView.builder(
-            shrinkWrap: false,
-            controller: productListProvider!.controller,
-            itemCount:
-                (productListProvider!.offset < productListProvider!.total)
-                    ? productListProvider!.productList.length + 1
-                    : productListProvider!.productList.length,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return (index == productListProvider!.productList.length &&
-                      isLoadingmore)
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : listItem(index);
-            },
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search for a product',
+                  ),
+                  onChanged: (query) {
+                    setState(() {});
+                    // You can filter the product list based on the user's query here
+                    // productListProvider.filterProducts(query);
+                  },
+                ),
+                Container(
+                  height: height / 2,
+                  child: ListView.builder(
+                    shrinkWrap: false,
+                    controller: productListProvider!.controller,
+                    itemCount: (productListProvider!.offset <
+                            productListProvider!.total)
+                        ? productListProvider!.productList.length + 1
+                        : productListProvider!.productList.length,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return (index ==
+                                  productListProvider!.productList.length &&
+                              isLoadingmore)
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : listItem(index);
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

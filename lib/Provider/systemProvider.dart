@@ -12,7 +12,7 @@ enum SystemProviderPolicyStatus {
   isMoreLoading,
 }
 
-class SystemProvider extends ChangeNotifier {
+class SystemProviderNew extends ChangeNotifier {
   SystemProviderPolicyStatus _systemProviderPolicyStatus =
       SystemProviderPolicyStatus.initial;
   List<String> langCode = [
@@ -89,6 +89,7 @@ class SystemProvider extends ChangeNotifier {
 
       if (!result['error']) {
         var payment = result['paymentMethods'];
+        print('hereerreenbgnbnmbnm');
         isMyFatoorahEnable =
         payment['myfaoorah_payment_method'] == '1' ? true : false;
 

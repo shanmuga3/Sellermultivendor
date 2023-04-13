@@ -170,6 +170,13 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
                   builder: (context) => SetPass(mobileNumber: mobile!),
                 ),
               );
+            }else if (widget.title == getTranslated(context, "FORGOT_PASS_TITLE")!) {
+              Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => SetPass(mobileNumber: mobile!),
+                ),
+              );
             }
           } else {
             setSnackbar(

@@ -57,3 +57,13 @@ const double textFontSize20 = 20;
 const double textFontSize23 = 23;
 const double textFontSize25 = 25;
 const double textFontSize30 = 30;
+
+
+String myfatoorahToken = "";
+String myfatoorahPaymentMode = "";
+String myfatoorahErrorUrl ="";
+String myfatoorahSuccessUrl = "";
+String myfatoorahLanguage ="";
+String myfatoorahCountry = "";
+String? REFER_CODE = '';
+const String USER_ID = 'user_id';

@@ -42,6 +42,7 @@
   "noItem" : "Geen Item Gevonden ..!! ",
   "SEND_VERIFY_CODE_LBL" : "We sturen een verificatiecode naar dit nummer ",
   "SEND_OTP_TITLE" : "verzenden otp ",
+  "SIGN_UP_LBL": "Sign Up",
   "MOBILEHINT_LBL" : "Mobiel nummer ",
   "COUNTRY_CODE_LBL" : "Landcode selecteren ",
   "SEND_OTP" : "OTP verzenden ",

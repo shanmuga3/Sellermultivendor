@@ -9,6 +9,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sellermultivendor/Provider/faqProvider.dart';
+import 'package:sellermultivendor/Screen/Campaign/provider/productlistProvider.dart';
+import 'package:sellermultivendor/Screen/Subscription/provider/paymentProvider.dart';
+import 'package:sellermultivendor/Screen/completeinfo/provider/allcat_provider.dart';
 import 'package:sellermultivendor/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Helper/Color.dart';
@@ -33,6 +36,7 @@ import 'Provider/salesReportProvider.dart';
 import 'Provider/searchProvider.dart';
 import 'Provider/settingProvider.dart';
 import 'Provider/stockmanagementProvider.dart';
+import 'Provider/systemProvider.dart';
 import 'Provider/taxProvider.dart';
 import 'Provider/walletProvider.dart';
 import 'Provider/zipcodeProvider.dart';
@@ -70,7 +74,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   FirebaseMessaging.onBackgroundMessage(myForgroundMessageHandler);
   if (!kIsWeb) {
-    channel = const AndroidNotificationChannel(
+    channel =  AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
       importance: Importance.high,
@@ -144,6 +148,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => ZipcodeProvider()),
         ChangeNotifierProvider<CategoryProvider>(
             create: (context) => CategoryProvider()),
+        ChangeNotifierProvider<AllCategoryProvider>(
+            create: (context) => AllCategoryProvider()),
         ChangeNotifierProvider<AttributeProvider>(
             create: (context) => AttributeProvider()),
         ChangeNotifierProvider<MediaProvider>(
@@ -177,6 +183,12 @@ class _MyAppState extends State<MyApp> {
             create: (context) => ListTileColorProvider()),
         ChangeNotifierProvider<fetchCampaignDataProvider>(
             create: (context) => fetchCampaignDataProvider()),
+        ChangeNotifierProvider<ProductListProviderSearch>(
+            create: (context) => ProductListProviderSearch()),
+        ChangeNotifierProvider<SystemProviderNew>(
+            create: (context) => SystemProviderNew()),
+        ChangeNotifierProvider<PaymentProviderFatoora>(
+            create: (context) => PaymentProviderFatoora()),
 
       ],
       child: MaterialApp(

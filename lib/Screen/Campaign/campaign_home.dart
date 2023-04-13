@@ -28,6 +28,9 @@ class _Campaign_ListState extends State<Campaign_List> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text('Campaign List',style: TextStyle(color: Colors.white),),
+        leading: const BackButton(
+          color: Colors.white, // <-- SEE HERE
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -37,17 +40,38 @@ class _Campaign_ListState extends State<Campaign_List> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
             SizedBox(
-              height: height/2,
+              height: height/1.3,
               child: ListView.builder(
                  itemCount: campaignListProvider.campaignList.length,
                   itemBuilder: (context , index){
                 return Padding(
-                  padding: const EdgeInsets.only(left: 12,right: 12,top: 8.0,bottom: 8.0),
+                  padding: const EdgeInsets.only(left: 12,right: 12,top: 5.0,bottom:5.0),
                   child: Card(
+                    elevation: 2,
+                    shape: Border(left: BorderSide(color: Colors.purple, width: 5)),
+
                     child: ListTile(
-                      title: Text(campaignListProvider.campaignList[index]["title"],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
-                      subtitle: Text(campaignListProvider.campaignList[index]["description"]),
-                      trailing: Text(campaignListProvider.campaignList[index]["start_date"]),
+                      title: Row(
+                        children: [
+                          Text("Campaign Name : ",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 12),),
+                          Text(campaignListProvider.campaignList[index]["title"],style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold,fontSize: 12),),
+                        ],
+                      ),
+                      subtitle: Row(
+                        children: [
+
+                          Text(campaignListProvider.campaignList[index]["description"]),
+                        ],
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(campaignListProvider.campaignList[index]["start_date"]),
+                          Text('${campaignListProvider.campaignList[index]["commission"]}%',style: TextStyle(color: Colors.green,fontSize: 12,fontWeight: FontWeight.bold),)
+
+                        ],
+                      ),
                     ),
                   ),
                 );

@@ -11,12 +11,6 @@ import '../Widget/routes.dart';
 import '../Widget/sharedPreferances.dart';
 import '../Widget/parameterString.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-final StreamController<String?> selectNotificationStream =
-    StreamController<String?>.broadcast();
 
 class PushNotificationService {
   late BuildContext context;
@@ -150,6 +144,13 @@ class PushNotificationService {
         );
   }
 }
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+final StreamController<String?> selectNotificationStream =
+StreamController<String?>.broadcast();
 
 //done above
 

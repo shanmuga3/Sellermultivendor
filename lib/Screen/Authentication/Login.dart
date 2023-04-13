@@ -18,6 +18,7 @@ import '../../Widget/validation.dart';
 import '../../Widget/noNetwork.dart';
 import '../TermFeed/policys.dart';
 import 'SendOtp.dart';
+import 'SendOtpRegister.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -349,7 +350,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           ),
           InkWell(
             onTap: () {
-              Routes.navigateToSellerRegister(context);
+              print("titleis ${getTranslated(context, "SEND_OTP_TITLE",)}");
+       Navigator.push(context, MaterialPageRoute(builder: (context) => SendOtpRegister(title: getTranslated(context, "SEND_OTP_TITLE").toString(),)));
+          //   Routes.navigateToSellerRegister(context);
             },
             child: Text(
               'Sign Up',

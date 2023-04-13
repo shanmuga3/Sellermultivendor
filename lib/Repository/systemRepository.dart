@@ -9,7 +9,7 @@ class SystemRepository {
       {required Map<String, dynamic> parameter,
       required String policyType}) async {
     try {
-      var policy = await ApiBaseHelper().postAPICall(getSettingsApiNew, parameter);
+      var policy = await ApiBaseHelper().postAPICall(getSettingApi, parameter);
 
       return {'policy': policy['data']};
     } on Exception catch (e) {
@@ -24,7 +24,7 @@ class SystemRepository {
   }) async {
     try {
       var systemSetting =
-          await ApiBaseHelper().postAPICall(getSettingsApiNew, parameter);
+          await ApiBaseHelper().postAPICall(getSettingApi, parameter);
 
       return {
         'error': systemSetting['error'],

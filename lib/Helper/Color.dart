@@ -15,6 +15,7 @@ const MaterialColor primary_app = MaterialColor(
     900: primary,
   },
 );
+
 const Color primary = Color(0xffFC6A57);
 const Color secondary = Color(0xffFDC994);
 const Color newPrimary = Color(0xffff6a63);

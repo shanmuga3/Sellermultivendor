@@ -40,8 +40,8 @@ class _SelectYourPlanState extends State<SelectYourPlan>
       length: 3,
       vsync: this,
     );
-   // Provider.of<SubscriptionProvider>(context, listen: false).checkSubscriptionofSeller(context);
-    Provider.of<SubscriptionProvider>(context, listen: false).fetchSubscriptionData();
+    Provider.of<SubscriptionProvider>(context, listen: false).checkSubscriptionofSeller(context);
+     Provider.of<SubscriptionProvider>(context, listen: false).fetchSubscriptionData();
 
   }
 

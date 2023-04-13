@@ -15,6 +15,7 @@ class AttributeRepository {
       throw ApiException('Something went wrong');
     }
   }
+
    static Future<Map<String, dynamic>> attributeset(
   ) async {
     try {
