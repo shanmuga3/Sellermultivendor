@@ -64,7 +64,7 @@ class _SelectYourPlanState extends State<SelectYourPlan>
           ?
           // Your tab view content goes here
           Consumer<TabColor>(builder: (context, tabColor, child) {
-            if(Provider.of<SubscriptionProvider>(context).checkSubscriptionData.isEmpty){
+           // if(Provider.of<SubscriptionProvider>(context).checkSubscriptionData.isEmpty){
               if(Provider.of<SubscriptionProvider>(context).subscriptionList.isEmpty){
                 return Center(
                   child: CircularProgressIndicator(),
@@ -192,18 +192,18 @@ class _SelectYourPlanState extends State<SelectYourPlan>
                 ) ;
             }
 
-            }else{
-              return Center(
-                child: Card(
-                  child: Container(
-                      height: 200,
-                      width: 200,
-                      child: Center(child: Text("You have already subscribed",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: grad2Color,fontWeight: FontWeight.bold,fontSize: 20),))),
-                ),
-              );
-            }
+            //}else{
+              // return Center(
+              //   child: Card(
+              //     child: Container(
+              //         height: 200,
+              //         width: 200,
+              //         child: Center(child: Text("You have already subscribed",
+              //           textAlign: TextAlign.center,
+              //           style: TextStyle(color: grad2Color,fontWeight: FontWeight.bold,fontSize: 20),))),
+              //   ),
+              // );
+         //   }
 
             })
           : noInternet(

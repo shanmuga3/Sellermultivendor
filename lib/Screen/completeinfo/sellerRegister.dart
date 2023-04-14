@@ -7,10 +7,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:sellermultivendor/Helper/Color.dart';
 import 'package:sellermultivendor/Provider/categoryProvider.dart';
 import 'package:http/http.dart' as http;
 import 'package:sellermultivendor/Screen/completeinfo/provider/allcat_provider.dart';
 
+import '../../Provider/settingProvider.dart';
 import '../../Widget/api.dart';
 import '../../Widget/jwtkeySecurity.dart';
 import '../../Widget/networkAvailablity.dart';
@@ -28,6 +30,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
   late String _selectedCity;
   late String _phoneNumber;
   late String _email;
+
   TextEditingController _storename = TextEditingController();
   TextEditingController _mobileNumber = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -49,11 +52,24 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
 
   @override
   Widget build(BuildContext context) {
- //   Provider.of<AllCategoryProvider>(context).fetchCategory(context);
+    //   Provider.of<AllCategoryProvider>(context).fetchCategory(context);
     //final categoryProvider = Provider.of<CategoryProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Complete Your Info'),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.keyboard_arrow_left,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: newPrimary,
+        title: Text(
+          'Complete Your Info',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -65,37 +81,96 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
               children: [
                 TextFormField(
                   controller: _storename,
-                  decoration: InputDecoration(
-                    labelText: 'Store Name',
-                  ),
+
+              decoration: InputDecoration(
+                labelText: 'Update store name',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                prefixIcon: Icon(Icons.person),
+              ),
+
                 ),
                 SizedBox(height: 16.0),
                 FutureBuilder<bool>(
-                  future: Provider.of<AllCategoryProvider>(context).fetchCategory(context),
-                  builder: (context, snapshot) {
-                    return Consumer<AllCategoryProvider>(builder: (context, data, index) {
-                      return DropdownButtonFormField<String>(
-                        hint: Text("Select Category"),
-                        value: dropdownValue.isNotEmpty ? dropdownValue : null,
-                        items: data.categoryName.map((item) {
-                          return DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            dropdownValue = newValue.toString();
-                            _selectedCategory = dropdownValue;
-                            print("selected dropdown value: $dropdownValue");
-                          });
-                        },
-                      );
-                    });
-                  }
-                ),
+                    future: Provider.of<AllCategoryProvider>(context)
+                        .fetchCategory(context),
+                    builder: (context, snapshot) {
+                      return Consumer<AllCategoryProvider>(
+                          builder: (context, data, index) {
+                        return DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            labelText: 'Select category',
+                            labelStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          hint: Text("Select Category"),
+                          value:
+                              dropdownValue.isNotEmpty ? dropdownValue : null,
+                          items: data.categoryName.map((item) {
+                            return DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              dropdownValue = newValue.toString();
+                              _selectedCategory = dropdownValue;
+                              print("selected dropdown value: $dropdownValue");
+                            });
+                          },
+                        );
+                      });
+                    }),
                 SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      labelText: 'Type of business',
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                     hint: Text("Select type of business"),
                     value: _selectedTypeOfBusiness.isNotEmpty
                         ? _selectedTypeOfBusiness
@@ -113,28 +188,64 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                     onChanged: (value) {
                       setState(() {
                         _selectedTypeOfBusiness = value.toString();
-                     //   _selectedCategory = _selectedTypeOfBusiness;
+                        //   _selectedCategory = _selectedTypeOfBusiness;
                       });
                     }),
                 SizedBox(height: 16.0),
                 TextFormField(
                   controller: _mobileNumber,
                   decoration: InputDecoration(
-                    labelText: 'Phone Number',
+                    labelText: 'Update mobile number',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: Icon(Icons.person),
                   ),
 
+
                   keyboardType: TextInputType.phone,
+
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
+
                   controller: _emailController,
+                  // decoration: InputDecoration(
+                  //   labelText: 'Email',
+                  //
+                  // ),
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Enter email',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: Icon(Icons.person),
                   ),
-                  //validator
-                  onSaved: (value) {
-                    _email = value.toString();
+
+                  validator: (value) {
+                    if (value?.length != 10) {
+                      return 'Please enter a store name';
+                    }
+                    return null;
                   },
+                  //validator
+                  // onSaved: (value) {
+                  //   _email = value.toString();
+                  // },
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 16.0),
@@ -150,7 +261,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                     }
                   },
                   child: Container(
-                    height: 200,
+                    height: 150,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -170,19 +281,20 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.grey),
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     if (_formKey.currentState != null) {
                       checkNetwork();
-                      // _formKey.currentState?.save();
-                      // // TODO: Save data to backend
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   SnackBar(
-                      //     content: Text('Info saved'),
-                      //   ),
-                      // );
                     }
                   },
-                  child: Text('Save'),
+                  child: Text('Update Information',style: TextStyle(color: Colors.white),),
                 ),
               ],
             ),
@@ -195,7 +307,8 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
   Future<void> checkNetwork() async {
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
-      sellerRegisterAPI();
+
+      sellerUpdateAPI();
     } else {
       Future.delayed(
         const Duration(seconds: 2),
@@ -211,41 +324,78 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
       );
     }
   }
-
-  Future<void> sellerRegisterAPI() async {
+  bool isUpdating = false;
+  Future<void> sellerUpdateAPI() async {
     isNetworkAvail = await isNetworkAvailable();
+
     if (isNetworkAvail) {
+      setState(() {
+        isUpdating = true;
+      });
+
       try {
+        if (isUpdating == true) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Container(
+                  height: 20,
+                  width: 20,
+                  child: Center(child: CircularProgressIndicator())),
+            ),
+          );
+        }
         var request = http.MultipartRequest("POST", updateUserApi);
         request.headers.addAll(headers);
+        request.fields["id"] =
+            context.read<SettingProvider>().CUR_USERID.toString();
         request.fields[Name] = CUR_USERNAME.toString();
         request.fields[Mobile] = _mobileNumber.text.toString();
         request.fields[StoreName] = _storename.text.toString();
-        request.fields['business_type'] = _selectedCategory.toString();
-        request.fields['category_name'] = _selectedTypeOfBusiness.toString();
-        request.fields[EmailText] = _emailController.text;
+        request.fields['business_type'] = _selectedTypeOfBusiness.toString();
+        request.fields['category_name'] = _selectedCategory.toString();
+        request.fields[EmailText] = _emailController.text.toString();
         if (_storeLogo != null) {
           final mimeType = lookupMimeType(_storeLogo!.path);
           var extension = mimeType!.split("/");
           var storelogo = await http.MultipartFile.fromPath(
             "store_logo",
             _storeLogo!.path,
-            contentType: MediaType('image', extension[0]),
+            contentType: MediaType('image', extension[1]),
           );
           request.files.add(storelogo);
         }
 
+        print('here=>>>> ${request.headers}');
         for (var key in request.fields.keys) {
           print('here=>>>> $key: ${request.fields[key]}');
         }
         var response = await request.send();
+        print('Response Data: 1 ' + response.statusCode.toString());
         var responseData = await response.stream.toBytes();
+        print('Response Data: 2 ' + responseData.toString());
         var responseString = String.fromCharCodes(responseData);
-        print('Response Data: ' + responseString.toString());
-        var getdata = json.decode(responseString);
+        print('Response Data:  3' + responseString.toString());
+        var getdata = jsonDecode(responseString.toString());
         bool error = getdata["error"];
         String? msg = getdata['message'];
         if (!error) {
+
+          setState(() {
+            isUpdating = false;
+            //   Navigator.push(context, MaterialPageRoute(builder: (context)))
+            if (!error) {
+              Navigator.pop(context); // dismiss any existing dialogs
+              if (!isUpdating) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        content: Text("Seller data Updated Successfully"),
+                      ),
+                );
+              }
+            }});
           //showMsgDialog(msg!);
           await buttonController!.reverse();
         } else {
@@ -253,10 +403,13 @@ class _CompleteInfoPageState extends State<CompleteInfoPage>
           // showMsgDialog(msg!);
         }
       } on TimeoutException catch (_) {
-        // showOverlay(
-        //   getTranslated(context, 'somethingMSg')!,
-        //   context,
-        // );
+        print("errooeesis here ${_}");
+      }finally {
+        if (mounted) {
+          setState(() {
+            isUpdating = false;
+          });
+        }
       }
     } else {
       if (mounted) {

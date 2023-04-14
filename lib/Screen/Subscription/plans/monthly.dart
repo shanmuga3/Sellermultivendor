@@ -9,7 +9,8 @@ import 'package:sellermultivendor/Helper/Color.dart';
 import 'package:sellermultivendor/Helper/Constant.dart';
 import 'package:sellermultivendor/Screen/HomePage/home.dart';
 import 'package:sellermultivendor/Widget/api.dart';
-
+import 'package:sellermultivendor/Widget/parameterString.dart';
+import 'package:http/http.dart' as http;
 import '../../../Helper/ApiBaseHelper.dart';
 import '../../../Provider/settingProvider.dart';
 import '../../../Widget/snackbar.dart';
@@ -37,6 +38,54 @@ class _MonthlyDataState extends State<MonthlyData> {
   String? basePrice;
   String? MainPrice;
   bool isSelected = false;
+  bool _isLoading = false;
+  bool _isPaymentSuccess = false;
+  Future<void> sendSubscriptionData(
+      {required String subscriptionName,
+      required String subscriptionId,
+      required String transactionId}) async {
+    setState(() {
+      _isLoading = true;
+    });
+    final response = await http.post(purchasedSubscription, body: {
+      'seller_id': context.read<SettingProvider>().CUR_USERID,
+      'seller_name': CUR_USERNAME.toString(),
+      'subscription_name': subscriptionName,
+      'subscription_id': subscriptionId,
+      'transaction_id': transactionId,
+      'days': '30',
+      'start_date': DateTime.now().toString(),
+      'expiry_date': DateTime.now().add(Duration(days: 30)).toString(),
+    });
+
+    if (response.statusCode == 200) {
+      // API call successful
+      print('Subscription data sent successfully');
+      setState(() {
+        _isLoading = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Subscription Successful!'),
+            content: Text('You have successfully subscribed.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // API call failed
+      print('Failed to send subscription data');
+    }
+  }
 
   final GlobalKey<ScaffoldMessengerState> _checkscaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -366,16 +415,26 @@ class _MonthlyDataState extends State<MonthlyData> {
                         ],
                       ),
                     ),
+
                   );
-                  print('reposneee ${successUrl} ${errorUrl}' +
-                      response.paymentId.toString());
+                  setState(() {
+                    print('reposneee ${successUrl} ${errorUrl}' +
+                        response.paymentId.toString());
+                  });
+
                   if (response.status.toString() == 'PaymentStatus.Success') {
+                    print("payamnet==>");
+
                     //  context.read<CartProvider>().setProgress(true);
-                     // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-                    await updateOrderStatus(
-                      orderID: orderId,
-                      status: "received",
-                    );
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                    await sendSubscriptionData(
+                        subscriptionName: selectedTitle.toString(),
+                        subscriptionId: selectedCardIndex.toString(),
+                        transactionId: response.paymentId.toString());
+                    // await updateOrderStatus(
+                    //   orderID: ORDERID, //orderId,
+                    //   status: "received",
+                    // );
                     addTransaction(
                       response.paymentId,
                       orderID,
@@ -429,6 +488,7 @@ class _MonthlyDataState extends State<MonthlyData> {
       {required String status, required String orderID}) async {
     var parameter = {"order_id": orderID, "status": status};
     var result = await ApiBaseHelper().postAPICall(updateOrderApi, parameter);
+    print("orderstatus updated!");
     return {'error': result['error'], 'message': result['message']};
   }
 
@@ -448,19 +508,20 @@ class _MonthlyDataState extends State<MonthlyData> {
         "type": paymentMethods,
         "txn_id": tranId,
         "amount": amount,
-        "status": status,
+        "status": "success",
         "message": msg ?? '$status the payment'
       };
       apiBaseHelper.postAPICall(addTransactionApi, parameter).then(
         (getdata) {
           bool error = getdata['error'];
           String? msg1 = getdata['message'];
-
+print("parmetes and response ${parameter} }");
           if (!error) {
             if (redirect) {
               // context.read<UserProvider>().setCartCount('0');
-              //  clearAll();
-              // Routes.navigateToOrderSuccessScreen(context);
+
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
               print("successfull");
             }
           } else {

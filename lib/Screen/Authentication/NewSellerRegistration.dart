@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:provider/provider.dart';
 import 'package:sellermultivendor/Screen/Authentication/Login.dart';
 import 'package:sellermultivendor/Widget/snackbar.dart';
 import '../../Helper/ApiBaseHelper.dart';
@@ -24,6 +26,7 @@ import '../../Widget/api.dart';
 import '../../Widget/desing.dart';
 import '../../Widget/validation.dart';
 import '../../Widget/noNetwork.dart';
+import '../completeinfo/provider/allcat_provider.dart';
 
 class SellerRegister extends StatefulWidget {
   final String mobileno;
@@ -42,11 +45,13 @@ class _SellerRegisterState extends State<SellerRegister>
   GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController nameController = TextEditingController();
+  TextEditingController _storename = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
+  File? _storeLogo;
    FocusNode? nameFocus,
+   storenamefocus,
       emailFocus,
       passFocus,
       confirmPassFocus,
@@ -60,10 +65,14 @@ class _SellerRegisterState extends State<SellerRegister>
   var addressProfFile, nationalIdentityCardFile, storeLogoFile;
   String? mobile,
       name,
+  storename,
       email,
       password,
       confirmpassword;
+  String _selectedTypeOfBusiness = "";
 
+  String dropdownValue = '';
+  late String _selectedCategory;
 
 //==============================================================================
 //============================= INIT Method ====================================
@@ -94,16 +103,30 @@ class _SellerRegisterState extends State<SellerRegister>
   Future<void> sellerRegisterAPI() async {
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
-      if(password.toString() == confirmpassword.toString()){
+    //  if(passwordController.text.toString() == confirmPasswordController.text.toString()){
         try {
           var request = http.MultipartRequest("POST", registerApi);
           request.headers.addAll(headers);
           request.fields[MOBILE] = widget.mobileno.toString();
-          request.fields[Name] = name!;
+          request.fields[Name] = nameController.text.toString() ;
+          request.fields["user_id"] =  context.read<SettingProvider>().CUR_USERID!;
+          request.fields[StoreName] = _storename.text.toString();
+          request.fields['business_type'] = _selectedTypeOfBusiness.toString();
+          request.fields['category_name'] = _selectedCategory.toString();
           //request.fields[Mobile] = mobile!;
           request.fields[Password] = password!;
           request.fields[EmailText] = email!;
           request.fields[ConfirmPassword] = confirmpassword!;
+          if (_storeLogo != null) {
+            final mimeType = lookupMimeType(_storeLogo!.path);
+            var extension = mimeType!.split("/");
+            var storelogo = await http.MultipartFile.fromPath(
+              "store_logo",
+              _storeLogo!.path,
+              contentType: MediaType('image', extension[1]),
+            );
+            request.files.add(storelogo);
+          }
           for (var key in request.fields.keys) {
             print('here=>>>> $key: ${request.fields[key]}');
           }
@@ -115,9 +138,17 @@ class _SellerRegisterState extends State<SellerRegister>
           bool error = getdata["error"];
           String? msg = getdata['message'];
           if (!error) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-            Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
-            await buttonController!.reverse();
+            if(passwordController.text.toString() == confirmPasswordController.text.toString()){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+              Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
+              await buttonController!.reverse();
+          }
+            else{
+              showDialog(context: context, builder: (context) => AlertDialog(
+                content: Text("Password does not matched !"),
+              ));
+            }
+
           } else {
             await buttonController!.reverse();
             showMsgDialog(msg!);
@@ -128,10 +159,10 @@ class _SellerRegisterState extends State<SellerRegister>
             context,
           );
         }
-      }
-      else{
-        setSnackbar("Password does not match !", context);
-      }
+    //  }
+     // else{
+
+    //  }
 
     } else {
       if (mounted) {
@@ -314,10 +345,19 @@ class _SellerRegisterState extends State<SellerRegister>
                   getLogo(),
                   setSignInLabel(),
                   setName(),
+                  storeName(),
+
+                  setMobileNo(),
+                  //   phnnumber(),
                   setEmail(),
                   setPass(),
                   confirmPassword(),
+
+                  typeofBusiness(),
+                  category(),
+                  storeLogo(),
                   loginBtn(),
+
                 ],
               ),
             ),
@@ -475,9 +515,176 @@ class _SellerRegisterState extends State<SellerRegister>
       ),
     );
   }
-
-
-
+storeLogo(){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
+      padding: const EdgeInsets.only(
+        top: 30.0,
+      ),
+      child: GestureDetector(
+        onTap: () async {
+          // TODO: Implement image upload
+          final pickedFile = await ImagePicker()
+              .getImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            setState(() {
+              _storeLogo = File(pickedFile.path);
+            });
+          }
+        },
+        child: Container(
+          height: 150,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              color: Colors.grey,
+            ),
+          ),
+          child: _storeLogo == null
+              ? Center(
+            child: Text('Tap to upload store logo'),
+          )
+              : Image.file(
+            _storeLogo!,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+}
+  storeName(){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
+      padding: const EdgeInsets.only(
+        top: 30.0,
+      ),
+      child: TextFormField(
+        onFieldSubmitted: (v) {
+          FocusScope.of(context).requestFocus(storenamefocus);
+        },
+        keyboardType: TextInputType.text,
+        controller: _storename,
+        style: const TextStyle(
+          color: fontColor,
+          fontWeight: FontWeight.normal,
+        ),
+        focusNode: storenamefocus,
+        textInputAction: TextInputAction.next,
+        inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+        validator: (val) =>
+            StringValidation.validateThisFieldRequered(val!, context),
+        onSaved: (String? value) {
+          storename = value;
+        },
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: primary),
+            borderRadius: BorderRadius.circular(circularBorderRadius7),
+          ),
+          prefixIcon: const Icon(
+            Icons.store,
+            color: lightBlack2,
+            size: 20,
+          ),
+          hintText: "Store Name",
+          hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+            color: lightBlack2,
+            fontWeight: FontWeight.normal,
+          ),
+          filled: true,
+          fillColor: white,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          prefixIconConstraints: const BoxConstraints(
+            minWidth: 40,
+            maxHeight: 20,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: lightBlack2),
+            borderRadius: BorderRadius.circular(circularBorderRadius7),
+          ),
+        ),
+      ),
+    );
+  }
+  typeofBusiness(){
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
+      padding: const EdgeInsets.only(
+        top: 30.0,
+      ),
+      child: DropdownButtonFormField<String>(
+ decoration: InputDecoration(
+   prefixIcon: const Icon(Icons.business,color: lightBlack2,size: 20,)
+ ),
+          hint: Text("Select type of business",style:  Theme.of(context).textTheme.subtitle2!.copyWith(
+            color: lightBlack2,
+            fontWeight: FontWeight.normal,
+          ),),
+          value: _selectedTypeOfBusiness.isNotEmpty
+              ? _selectedTypeOfBusiness
+              : null,
+          items: [
+            DropdownMenuItem(
+              value: 'company',
+              child: Text("Company"),
+            ),
+            DropdownMenuItem(
+              value: 'Individual',
+              child: Text("Individual"),
+            ),
+          ],
+          onChanged: (value) {
+            setState(() {
+              _selectedTypeOfBusiness = value.toString();
+              //   _selectedCategory = _selectedTypeOfBusiness;
+            });
+          }),
+    );
+  }
+  category(){
+   return FutureBuilder<bool>(
+        future: Provider.of<AllCategoryProvider>(context)
+            .fetchCategory(context),
+        builder: (context, snapshot) {
+          return Consumer<AllCategoryProvider>(
+              builder: (context, data, index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  padding: const EdgeInsets.only(
+                    top: 30.0,
+                  ),
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.category_outlined,color: lightBlack2,size: 20,)
+                    ),
+                    hint: Text("Select Category",style:  Theme.of(context).textTheme.subtitle2!.copyWith(
+                      color: lightBlack2,
+                      fontWeight: FontWeight.normal,
+                    ),),
+                    value:
+                    dropdownValue.isNotEmpty ? dropdownValue : null,
+                    items: data.categoryName.map((item) {
+                      return DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(item),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        dropdownValue = newValue.toString();
+                        _selectedCategory = dropdownValue;
+                        print("selected dropdown value: $dropdownValue");
+                      });
+                    },
+                  ),
+                );
+              });
+        });
+  }
 
 
 
@@ -729,3 +936,5 @@ class _SellerRegisterState extends State<SellerRegister>
     );
   }
 }
+
+

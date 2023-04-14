@@ -20,8 +20,14 @@ class PaymentProviderFatoora with ChangeNotifier {
   String get token => _token;
   String get successUrl => _successUrl;
   get paymentMethods => _paymentMethods;
-
+  bool _isProgress = false;
   //late bool myfatooorahh;
+  get isProgress => _isProgress;
+
+  setProgress(bool progress) {
+    _isProgress = progress;
+    notifyListeners();
+  }
 
   Future<void> getPaymentMethod(BuildContext context) async {
     var parameter = {"type": "payment_method"};
