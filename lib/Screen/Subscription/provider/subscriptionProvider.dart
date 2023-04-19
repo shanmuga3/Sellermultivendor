@@ -29,23 +29,30 @@ class SubscriptionProvider extends ChangeNotifier {
     var parameter = {SellerId: context.read<SettingProvider>().CUR_USERID};
     print('hreee2'+"selllerid"+ context.read<SettingProvider>().CUR_USERID.toString());
     ApiBaseHelper().postAPICall(checkSubscription, parameter).then((getData) async{
-      _checkSubscriptionData = getData["data"];
-    //  final data = getData["data"];
-      _subscription_name = getData["data"][0]['subscription_name'];
-      print("nameisssss ${_subscription_name}");
+
     //  _startDate = getData["data"][0]["start_date"].toString();
-      bool isSubscribed = _checkSubscriptionData.isNotEmpty;
-      if (isSubscribed) {
-        // show already subscribed page
-        print("show already subscribed pag" );
-        //Navigator.pushNamed(context, '/alreadySubscribed');
-      } else {
-        // show subscribe page
-        print("not already subscribed pag" );
-       // Navigator.pushNamed(context, '/subscribe');
+      try{
+        _checkSubscriptionData = getData["data"];
+        //  final data = getData["data"];
+        _subscription_name = getData["data"][0]['subscription_name'] ?? 0;
+        print("nameisssss ${_subscription_name}");
+
+        bool isSubscribed = _checkSubscriptionData.isNotEmpty;
+        if (isSubscribed) {
+          // show already subscribed page
+          print("show already subscribed pag" );
+          //Navigator.pushNamed(context, '/alreadySubscribed');
+        } else {
+          // show subscribe page
+          print("not already subscribed pag" );
+          // Navigator.pushNamed(context, '/subscribe');
+        }
+      }catch(e){
+        print("the errooor is here ${e}");
       }
+
       notifyListeners();
-    });
+   });
   }
 
 

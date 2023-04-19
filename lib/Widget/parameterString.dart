@@ -10,6 +10,7 @@ String Decimal_Digits = "1";
 String CUR_BALANCE = '0.0';
 String LOGO = '';
 String RATTING = '';
+String? AREA_NAME;
 String NO_OFF_RATTING = '';
 String? supportedLocale;
 String? Is_APP_IN_MAINTANCE = '';

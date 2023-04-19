@@ -40,6 +40,7 @@ class LoginProvider extends ChangeNotifier {
             username!,
             mobile!,
           );
+print("datas which we are sendinf => ${id} ${username} ${mobile}");
           setPrefrenceBool(isLogin, true);
           Navigator.pushReplacement(
             context,

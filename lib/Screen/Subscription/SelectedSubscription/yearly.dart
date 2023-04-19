@@ -11,6 +11,7 @@ import 'package:sellermultivendor/Widget/parameterString.dart';
 
 import '../../../Provider/settingProvider.dart';
 import '../../../Widget/api.dart';
+import '../../../Widget/snackbar.dart';
 import '../../HomePage/home.dart';
 
 
@@ -64,6 +65,7 @@ class _SelectedSubscriptionYearlyState extends State<SelectedSubscriptionYearly>
 
       // API call successful
       print('Subscription data sent successfully');
+      setSnackbar("Congratulation you have successfully subscribed", context);
       setState(() {
         _isLoading = false;
       });
@@ -335,7 +337,7 @@ class _SelectedSubscriptionYearlyState extends State<SelectedSubscriptionYearly>
                 GestureDetector(
                   onTap: (){
                     sendSubscriptionData();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                 //   Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 
                   },
                   child: Container(

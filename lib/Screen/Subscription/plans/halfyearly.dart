@@ -126,169 +126,188 @@ class _HalfYearlyDataState extends State<HalfYearlyData> {
           ),
         ),
       ),
-      Expanded(
-          child: ListView.builder(
-              itemCount: widget.subscriptionList.length,
-              itemBuilder: (context, index) {
-                int value =
-                    int.parse(widget.subscriptionList[index]["price"]) * 6 ;
-                return Padding(
-                    padding: const EdgeInsets.only(
-                        left: 12, right: 12, bottom: 5),
-                    child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isSelected = true;
-                            selectedCardIndex = index;
-                            selectedTitle =
-                            widget.subscriptionList[index]['title'];
-                            desc1 = widget.subscriptionList[index]
-                            ['discription_one'];
-                            desc2 = widget.subscriptionList[index]
-                            ['discription_two'];
-                            desc3 = widget.subscriptionList[index]
-                            ['discription_three'];
-                            basePrice = value.toString();
-                            MainPrice =
-                            widget.subscriptionList[index]['half_yearly_price'];
-                          });
-                          print(
-                              'selectedIndex is ===> ${selectedCardIndex} and title is ${selectedTitle}');
-                        },
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              side: BorderSide(
-                                  color: selectedCardIndex == index
-                                      ? grad2Color
-                                      : Colors.transparent,
-                                  width: 4.0),
-                            ),
-                            child: Container(
-                              //     height: MediaQuery.of(context).size.height / 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 12.0,right: 12.0,bottom: 12.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          widget.subscriptionList[index]
-                                          ["title"],
-                                          style: TextStyle(
-                                              fontSize: 25,
+      ListView.builder(
+        reverse: true,
+          shrinkWrap: true,
+          itemCount: widget.subscriptionList.length,
+          itemBuilder: (context, index) {
+            int value =
+                int.parse(widget.subscriptionList[index]["price"]) * 6 ;
+            return Padding(
+                padding: const EdgeInsets.only(
+                    left: 12, right: 12, bottom: 5),
+                child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        if( widget.subscriptionList[index]
+                        ['monthy_discounted_price'] == "0"){
+                          isSelected = false;
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upgrade your plan")));
+                        }
+                        else{
+                          isSelected = true;
+                          selectedCardIndex = index;
+                          selectedTitle =
+                          widget.subscriptionList[index]['title'];
+                          desc1 = widget.subscriptionList[index]
+                          ['discription_one'];
+                          desc2 = widget.subscriptionList[index]
+                          ['discription_two'];
+                          desc3 = widget.subscriptionList[index]
+                          ['discription_three'];
+                          basePrice = value.toString();
+                          MainPrice =
+                          widget.subscriptionList[index]['half_yearly_price'];
+                        }
 
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Column(
+                      }
+
+                      );
+                      print(
+                          'selectedIndex is ===> ${selectedCardIndex} and title is ${selectedTitle}');
+                    },
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          side: BorderSide(
+                              color: selectedCardIndex == index
+                                  ? grad2Color
+                                  : Colors.transparent,
+                              width: 4.0),
+                        ),
+                        child: Container(
+                          //     height: MediaQuery.of(context).size.height / 3,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12.0,right: 12.0,bottom: 12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      widget.subscriptionList[index]
+                                      ["title"],
+                                      style: TextStyle(
+                                          fontSize: 25,
+
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  widget.subscriptionList[index]
-                                                  ["half_yearly_price"],
-                                                  style: TextStyle(
-                                                      fontSize: 25,
-                                                      color: Colors.red,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                SizedBox(width: 5,),
-                                                Text(
-                                                  "SAR",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
                                             Text(
-                                              value.toString(),
+                                              widget.subscriptionList[index]
+                                              ["half_yearly_price"] == "0" ? "FREE" :widget.subscriptionList[index]
+                                              ["half_yearly_price"],
                                               style: TextStyle(
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  decorationColor: Colors.red,
+                                                  fontSize: 25,
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox(width: 5,),
+                                            widget.subscriptionList[index]
+                                            ["half_yearly_price"] == "0" ?   Text(
+                                              "",
+                                              style: TextStyle(
                                                   fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ):     Text(
+                                              "SAR",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ],
+                                        ),
+                                        Text(
+                                          value.toString(),
+                                          style: TextStyle(
+                                              decoration: TextDecoration
+                                                  .lineThrough,
+                                              decorationColor: Colors.red,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ],
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.check_circle_outline,
-                                              color: Colors.black,
-                                              size: 15.0,
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              widget.subscriptionList[index]
-                                              ["discription_one"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.check_circle_outline,
-                                              color: Colors.black,
-                                              size: 15.0,
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              widget.subscriptionList[index]
-                                              ["discription_two"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.check_circle_outline,
-                                              color: Colors.black,
-                                              size: 15.0,
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              widget.subscriptionList[index]
-                                              ["discription_three"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
                                   ],
                                 ),
-                              ),
-                            ))));
-              })),
+                                Column(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.black,
+                                          size: 15.0,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          widget.subscriptionList[index]
+                                          ["discription_one"],
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.black,
+                                          size: 15.0,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          widget.subscriptionList[index]
+                                          ["discription_two"],
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.black,
+                                          size: 15.0,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          widget.subscriptionList[index]
+                                          ["discription_three"],
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ))));
+          }),
       isSelected == true
           ? Consumer<PaymentProviderFatoora>(
           builder: (contexty, myfatoora, snapshot) {
@@ -506,8 +525,8 @@ class _HalfYearlyDataState extends State<HalfYearlyData> {
             if (redirect) {
               // context.read<UserProvider>().setCartCount('0');
 
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+              // Navigator.pushReplacement(
+              //     context, MaterialPageRoute(builder: (context) => Home()));
               print("successfull");
             }
           } else {

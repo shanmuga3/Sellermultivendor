@@ -8,6 +8,7 @@ import 'package:sellermultivendor/Widget/parameterString.dart';
 
 import '../../../Provider/settingProvider.dart';
 import '../../../Widget/api.dart';
+import '../../../Widget/snackbar.dart';
 import '../../HomePage/home.dart';
 
 
@@ -59,6 +60,7 @@ class _SelectedSubscriptionState extends State<SelectedSubscription> {
     if (response.statusCode == 200) {
 
       // API call successful
+      setSnackbar("Congratulation you have successfully subscribed", context);
       print('Subscription data sent successfully');
       setState(() {
         _isLoading = false;
@@ -331,7 +333,7 @@ class _SelectedSubscriptionState extends State<SelectedSubscription> {
                 GestureDetector(
                   onTap: (){
                     sendSubscriptionData();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                  //  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 
                   },
                   child: Container(

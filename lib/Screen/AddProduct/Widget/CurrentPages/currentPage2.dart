@@ -1,7 +1,9 @@
 //==============================================================================
 //============================= UI Part ========================================
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../Widget/validation.dart';
+import '../../../Subscription/provider/subscriptionProvider.dart';
 import '../../Add_Product.dart';
 import '../getCommanInputTextFieldWidget.dart';
 import '../getCommanWidget.dart';
@@ -228,7 +230,20 @@ currentPage2(
                   child: getPrimaryCommanText(
                       getTranslated(context, "Is Product COD Allowed?")!, true),
                 ),
-                getCommanSwitch(2, update),
+                Provider.of<SubscriptionProvider>(context).subscription_name !=
+                        "Standard"
+                    ? getCommanSwitch(2, update)
+                    : Switch(
+                        value: false,
+                        onChanged: (bool newValue) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    content: Text(
+                                        "Please upgrade your plan to unlock this feature"),
+                                  ));
+                        },
+                      ),
               ],
             )
           : Container(),

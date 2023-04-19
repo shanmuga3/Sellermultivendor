@@ -31,7 +31,7 @@ final Uri getAttributrValuesApi = Uri.parse('${baseUrl}get_attribute_values');
 final Uri addProductsApi = Uri.parse('${baseUrl}add_products');
 final Uri getMediaApi = Uri.parse('${baseUrl}get_media');
 final Uri getSellerDetailsApi = Uri.parse('${baseUrl}get_seller_details');
-final Uri updateUserApi = Uri.parse('${baseUrl}update_user');
+final Uri updateUserApi = Uri.parse('${baseUrl}seller_complete_reg');
 final Uri getDeliveryBoysApi = Uri.parse('${baseUrl}get_delivery_boys');
 final Uri getDeleteProductApi = Uri.parse('${baseUrl}delete_product');
 final Uri editProductApi = Uri.parse('${baseUrl}update_products');
@@ -63,6 +63,8 @@ final Uri getSettingApi = Uri.parse('https://target.netsofters.net/app/v1/api/ge
 final Uri updateOrderApi = Uri.parse('https://target.netsofters.net/app/v1/api/update_order_status');
 final Uri addTransactionApi = Uri.parse('https://target.netsofters.net/seller/app/v1/api/add_transaction');
 final Uri allCategoriesApi = Uri.parse("https://target.netsofters.net/admin/app/v1/api/get_all_categories");
+final Uri allCitiesApi = Uri.parse("https://target.netsofters.net/admin/app/v1/api/get_all_cities");
+
 const String MOBILE = 'mobile';
 const String ADDRESS = 'address';
 const String EMAIL = 'email';

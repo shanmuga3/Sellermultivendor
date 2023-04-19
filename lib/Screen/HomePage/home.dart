@@ -34,7 +34,8 @@ import 'Widget/boxesDesingHome.dart';
 import 'Widget/randomColorWidget.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+
+  const Home({Key? key,}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -44,6 +45,7 @@ ApiBaseHelper apiBaseHelper = ApiBaseHelper();
 bool _isLoading = true;
 bool isLoadingmore = true;
 String? delPermission;
+String? permission;
 bool customerViewPermission = false;
 Map<int, LineChartData>? chartList;
 List colorList = [];
@@ -311,6 +313,7 @@ class _HomeState extends State<Home>
             CUR_BALANCE = double.parse(data[BALANCE]).toStringAsFixed(2);
             LOGO = data["logo"].toString();
             RATTING = data[Rating] ?? "";
+            AREA_NAME = data["location"] ?? "null";
             NO_OFF_RATTING = data[NoOfRatings] ?? "";
             var id = data[Id];
             var username = data[Username];
@@ -323,6 +326,7 @@ class _HomeState extends State<Home>
               mobile!,
             );
           }
+          print("areaname is ${AREA_NAME}");
           setState(
             () {
               _isLoading = false;
@@ -382,360 +386,382 @@ class _HomeState extends State<Home>
                     1: weekData(value),
                     2: monthData(value)
                   };
-                  if (value.getCurrentStatus == HomeProviderStatus.isSuccsess) {
-                    return _isLoading || supportedLocale == null
-                        ? const ShimmerEffect()
-                        : RefreshIndicator(
-                            key: _refreshIndicatorKey,
-                            onRefresh: _refresh,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [grad1Color, grad2Color],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        stops: [0, 1],
-                                        tileMode: TileMode.clamp,
+
+                    if (value.getCurrentStatus == HomeProviderStatus.isSuccsess) {
+                      return _isLoading || supportedLocale == null
+                          ? const ShimmerEffect()
+                          : RefreshIndicator(
+                        key: _refreshIndicatorKey,
+                        onRefresh: _refresh,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [grad1Color, grad2Color],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    stops: [0, 1],
+                                    tileMode: TileMode.clamp,
+                                  ),
+                                ),
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                child: SafeArea(
+                                  child: Stack(
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.17000000178813934,
+                                        child: Container(
+                                          width: width,
+                                          height: 1,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xffffffff),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    height: 200,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: SafeArea(
-                                      child: Stack(
-                                        children: [
-                                          Opacity(
-                                            opacity: 0.17000000178813934,
-                                            child: Container(
-                                              width: width,
-                                              height: 1,
-                                              decoration: const BoxDecoration(
-                                                color: Color(0xffffffff),
-                                              ),
+                                      SizedBox(
+                                        height: 155,
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsetsDirectional
+                                              .only(
+                                            top: 9.0,
+                                            start: 15,
+                                            end: 15,
+                                          ),
+                                          child: Text(
+                                            "${getTranslated(context, 'Welcome')}, $CUR_USERNAME",
+                                            style: const TextStyle(
+                                              fontFamily: 'PlusJakartaSans',
+                                              color: Color(0xffffffff),
+                                              fontSize: textFontSize16,
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.normal,
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 155,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .only(
-                                                top: 9.0,
-                                                start: 15,
-                                                end: 15,
+                                        ),
+                                      ),
+                                      Positioned.directional(
+                                        textDirection:
+                                        Directionality.of(context),
+                                        top: 64,
+                                        end: 0,
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: lightWhite,
+                                          ),
+                                          height: 124,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                        ),
+                                      ),
+                                      Positioned.directional(
+                                        textDirection:
+                                        Directionality.of(context),
+                                        top: 38,
+                                        end: 15,
+                                        start: 15,
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(
+                                                    circularBorderRadius15)),
+                                            color: white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: blarColor,
+                                                offset: Offset(0, 0),
+                                                blurRadius: 4,
+                                                spreadRadius: 0,
                                               ),
-                                              child: Text(
-                                                "${getTranslated(context, 'Welcome')}, $CUR_USERNAME",
-                                                style: const TextStyle(
-                                                  fontFamily: 'PlusJakartaSans',
-                                                  color: Color(0xffffffff),
-                                                  fontSize: textFontSize16,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontStyle: FontStyle.normal,
+                                            ],
+                                          ),
+                                          height: 130,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                  top: 8.0,
+                                                  bottom: 8.0,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    Text(
+                                                        getTranslated(context,
+                                                            "Total Sale")!,
+                                                        style: const TextStyle(
+                                                            color: Color(
+                                                                0xffff9366),
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
+                                                            fontFamily:
+                                                            "Roboto",
+                                                            fontStyle:
+                                                            FontStyle
+                                                                .normal,
+                                                            fontSize:
+                                                            textFontSize12),
+                                                        textAlign:
+                                                        TextAlign.left)
+                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                          Positioned.directional(
-                                            textDirection:
-                                                Directionality.of(context),
-                                            top: 64,
-                                            end: 0,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                color: lightWhite,
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                  bottom: 8.0,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    Text(
+                                                        DesignConfiguration
+                                                            .getPriceFormat(
+                                                          context,
+                                                          double.parse(value
+                                                              .overallSale!
+                                                              .toString()),
+                                                        ) ??
+                                                            '0.0',
+                                                        style: const TextStyle(
+                                                            color: black,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
+                                                            fontFamily:
+                                                            "Roboto",
+                                                            fontStyle:
+                                                            FontStyle
+                                                                .normal,
+                                                            fontSize:
+                                                            textFontSize14),
+                                                        textAlign:
+                                                        TextAlign.left)
+                                                  ],
+                                                ),
                                               ),
-                                              height: 124,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                            ),
-                                          ),
-                                          Positioned.directional(
-                                            textDirection:
-                                                Directionality.of(context),
-                                            top: 38,
-                                            end: 15,
-                                            start: 15,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(
-                                                        circularBorderRadius15)),
-                                                color: white,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: blarColor,
-                                                    offset: Offset(0, 0),
-                                                    blurRadius: 4,
-                                                    spreadRadius: 0,
-                                                  ),
-                                                ],
+                                              Padding(
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    horizontal: 8.0),
+                                                child: Opacity(
+                                                  opacity:
+                                                  0.05000000074505806,
+                                                  child: Container(
+                                                      width: 327,
+                                                      height: 1,
+                                                      decoration:
+                                                      const BoxDecoration(
+                                                          color: Color(
+                                                              0xff707070))),
+                                                ),
                                               ),
-                                              height: 130,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      top: 8.0,
-                                                      bottom: 8.0,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                            getTranslated(context,
-                                                                "Total Sale")!,
-                                                            style: const TextStyle(
-                                                                color: Color(
-                                                                    0xffff9366),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontFamily:
-                                                                    "Roboto",
-                                                                fontStyle:
-                                                                    FontStyle
-                                                                        .normal,
-                                                                fontSize:
-                                                                    textFontSize12),
-                                                            textAlign:
-                                                                TextAlign.left)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      bottom: 8.0,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                            DesignConfiguration
-                                                                    .getPriceFormat(
-                                                                  context,
-                                                                  double.parse(value
-                                                                      .overallSale!
-                                                                      .toString()),
-                                                                ) ??
-                                                                '0.0',
-                                                            style: const TextStyle(
-                                                                color: black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontFamily:
-                                                                    "Roboto",
-                                                                fontStyle:
-                                                                    FontStyle
-                                                                        .normal,
-                                                                fontSize:
-                                                                    textFontSize14),
-                                                            textAlign:
-                                                                TextAlign.left)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 8.0),
-                                                    child: Opacity(
+                                              Padding(
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    vertical: 10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceEvenly,
+                                                  children: [
+                                                    gethomePageTextDesing(
+                                                        RATTING, "Rating"),
+                                                    Opacity(
                                                       opacity:
-                                                          0.05000000074505806,
+                                                      0.05000000074505806,
                                                       child: Container(
-                                                          width: 327,
-                                                          height: 1,
+                                                          width: 1,
+                                                          height: 40,
                                                           decoration:
-                                                              const BoxDecoration(
-                                                                  color: Color(
-                                                                      0xff707070))),
+                                                          const BoxDecoration(
+                                                              color: Color(
+                                                                  0xff707070))),
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        gethomePageTextDesing(
-                                                            RATTING, "Rating"),
-                                                        Opacity(
-                                                          opacity:
-                                                              0.05000000074505806,
-                                                          child: Container(
-                                                              width: 1,
-                                                              height: 40,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                      color: Color(
-                                                                          0xff707070))),
-                                                        ),
-                                                        gethomePageTextDesing(
-                                                            value.totalproductCount ??
-                                                                '0',
-                                                            getTranslated(
-                                                                context,
-                                                                "Total Product")!),
-                                                        Opacity(
-                                                          opacity:
-                                                              0.05000000074505806,
-                                                          child: Container(
-                                                              width: 1,
-                                                              height: 40,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                      color: Color(
-                                                                          0xff707070))),
-                                                        ),
-                                                        gethomePageTextDesing(
-                                                            value.totalorderCount ??
-                                                                "0",
-                                                            getTranslated(
-                                                                context,
-                                                                "Total orders")!),
-                                                      ],
+                                                    gethomePageTextDesing(
+                                                        value.totalproductCount ??
+                                                            '0',
+                                                        getTranslated(
+                                                            context,
+                                                            "Total Product")!),
+                                                    Opacity(
+                                                      opacity:
+                                                      0.05000000074505806,
+                                                      child: Container(
+                                                          width: 1,
+                                                          height: 40,
+                                                          decoration:
+                                                          const BoxDecoration(
+                                                              color: Color(
+                                                                  0xff707070))),
                                                     ),
-                                                  ),
-                                                ],
+                                                    gethomePageTextDesing(
+                                                        value.totalorderCount ??
+                                                            "0",
+                                                        getTranslated(
+                                                            context,
+                                                            "Total orders")!),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 15,
-                                      left: 15,
-                                      top: 15,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        boxesDesingHome1(
-                                          "Complete your information to activate your account",
-                                          0,
-                                          context,
-                                        ),
-                                        Provider.of<SubscriptionProvider>(context).subscription_name == "Advanced"?
-                                        boxesDesingHome_Advanced('Advanced',
-                                          1,
-                                          context,)
-                                            :  Provider.of<SubscriptionProvider>(context).subscription_name == "Standard"
-                                                ? boxesDesingHome_Standard(
-                                                    'Standard',
-                                                    1,
-                                                    context,
-                                                  )
-                                                :Provider.of<SubscriptionProvider>(context).subscription_name == "Premium"
-                                                    ? boxesDesingHome_Premium(
-                                                        'Premium',
-                                                        1,
-                                                        context,
-                                                      )
-                                                    : boxesDesingHome2(
-                                                        'Select your plan',
-                                                        1,
-                                                        context,
-                                                      )
-                                      ],
-                                    ),
-                                  ),
-                                  //this is for campain
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 15,
-                                      left: 15,
-                                      top: 15,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        boxesDesingHome3(
-                                          "START YOUR CAMPAIGN",
-                                          0,
-                                          context,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 15,
-                                      left: 15,
-                                      top: 15,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        boxesDesingHome(
-                                          'Balance',
-                                          getTranslated(
-                                              context, 'BALANCE_LBL')!,
-                                          DesignConfiguration.getPriceFormat(
-                                              context,
-                                              double.parse(CUR_BALANCE))!,
-                                          0,
-                                          context,
-                                        ),
-                                        boxesDesingHome(
-                                          'Report',
-                                          getTranslated(context, 'Report')!,
-                                          value.grandFinalTotalOfSales,
-                                          1,
-                                          context,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 15),
-                                    child: Row(
-                                      children: [
-                                        boxesDesingHome(
-                                          'SoldOutProduct',
-                                          getTranslated(
-                                              context, "Sold Out Products")!,
-                                          value.totalsoldOutCount,
-                                          2,
-                                          context,
-                                        ),
-                                        boxesDesingHome(
-                                          'LowStockProduct',
-                                          getTranslated(
-                                              context, 'Low Stock Products')!,
-                                          value.totallowStockCount,
-                                          3,
-                                          context,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  getChart(),
-                                  catChart(value, context, setStateNow),
-                                ],
+                                ),
                               ),
-                            ),
-                          );
-                  } else if (value.getCurrentStatus ==
-                      SystemProviderPolicyStatus.isFailure) {
-                    return const ShimmerEffect();
-                  }
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 15,
+                                  left: 15,
+                                  top: 15,
+                                ),
+                                child: Row(
+                                  children: [
+                                    AREA_NAME != "null"
+                                        ? boxesDesingHomestatus(
+                                            "Account Status : ","Active",
+                                            0,
+                                            context,
+                                          )
+                                        :
+                                    boxesDesingHome1(
+                                      "Complete your information to activate your account",
+                                      0,
+                                      context,
+                                    ),
+                                    Provider.of<SubscriptionProvider>(
+                                        context)
+                                        .subscription_name ==
+                                        "Advanced"
+                                        ? boxesDesingHome_Advanced(
+                                      'Advanced',
+                                      1,
+                                      context,
+                                    )
+                                        : Provider.of<SubscriptionProvider>(
+                                        context)
+                                        .subscription_name ==
+                                        "Standard"
+                                        ? boxesDesingHome_Standard(
+                                      'Standard',
+                                      1,
+                                      context,
+                                    )
+                                        : Provider.of<SubscriptionProvider>(
+                                        context)
+                                        .subscription_name ==
+                                        "Premium"
+                                        ? boxesDesingHome_Premium(
+                                      'Premium',
+                                      1,
+                                      context,
+                                    )
+                                        : boxesDesingHome2(
+                                      'Select your plan',
+                                      1,
+                                      context,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              //this is for campain
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 15,
+                                  left: 15,
+                                  top: 15,
+                                ),
+                                child: Row(
+                                  children: [
+                                    boxesDesingHome3(
+                                      "START YOUR CAMPAIGN",
+                                      0,
+                                      context,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 15,
+                                  left: 15,
+                                  top: 15,
+                                ),
+                                child: Row(
+                                  children: [
+                                    boxesDesingHome(
+                                      'Balance',
+                                      getTranslated(
+                                          context, 'BALANCE_LBL')!,
+                                      DesignConfiguration.getPriceFormat(
+                                          context,
+                                          double.parse(CUR_BALANCE))!,
+                                      0,
+                                      context,
+                                    ),
+                                    boxesDesingHome(
+                                      'Report',
+                                      getTranslated(context, 'Report')!,
+                                      value.grandFinalTotalOfSales,
+                                      1,
+                                      context,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 15),
+                                child: Row(
+                                  children: [
+                                    boxesDesingHome(
+                                      'SoldOutProduct',
+                                      getTranslated(
+                                          context, "Sold Out Products")!,
+                                      value.totalsoldOutCount,
+                                      2,
+                                      context,
+                                    ),
+                                    boxesDesingHome(
+                                      'LowStockProduct',
+                                      getTranslated(
+                                          context, 'Low Stock Products')!,
+                                      value.totallowStockCount,
+                                      3,
+                                      context,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              getChart(),
+                              catChart(value, context, setStateNow),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (value.getCurrentStatus ==
+                        SystemProviderPolicyStatus.isFailure) {
+                      print("hereee =>1");
+                      return const ShimmerEffect();
+                    }
+
+                  print("hereee =>2");
                   return const ShimmerEffect();
                 },
               )
@@ -791,7 +817,7 @@ class _HomeState extends State<Home>
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
       await getSetting();
-      await        Provider.of<SubscriptionProvider>(context, listen: false)
+      await Provider.of<SubscriptionProvider>(context, listen: false)
           .checkSubscriptionofSeller(context);
     } else {
       if (mounted) {
@@ -826,10 +852,7 @@ class _HomeState extends State<Home>
           MAINTENANCE_MESSAGE = data['message_for_seller_app'];
           Decimal_Digits = data['decimal_point'] ?? "0"; // Painding
           setState(
-            () {
-
-            },
-
+            () {},
           );
           if (Is_APP_IN_MAINTANCE == "1") {
             appMaintenanceDialog(context);

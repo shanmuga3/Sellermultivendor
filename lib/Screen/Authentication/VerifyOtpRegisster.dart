@@ -259,7 +259,7 @@ class _MobileOTPState extends State<VerifyOtpRegister> with TickerProviderStateM
             if (widget.title == getTranslated(context, "SEND_OTP_TITLE")) {
 
 
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SellerRegister(mobileno: '+${widget.countryCode}-${widget.mobileNumber}')));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SellerRegister(mobileno: '${widget.mobileNumber}')));
             } else if (widget.title ==
                 getTranslated(context, "FORGOT_PASS_TITLE")) {
 

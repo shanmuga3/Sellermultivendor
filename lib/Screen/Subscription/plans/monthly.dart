@@ -131,171 +131,181 @@ class _MonthlyDataState extends State<MonthlyData> {
           ),
         ),
       ),
-      Expanded(
-          child: ListView.builder(
-              itemCount: widget.subscriptionList.length,
-              itemBuilder: (context, index) {
-                int value = int.parse(widget.subscriptionList[index]["price"]);
-                return Padding(
-                    padding:
-                        const EdgeInsets.only(left: 12, right: 12, bottom: 5),
-                    child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isSelected = true;
-                            selectedCardIndex = index;
-                            selectedTitle =
-                                widget.subscriptionList[index]['title'];
-                            desc1 = widget.subscriptionList[index]
-                                ['discription_one'];
-                            desc2 = widget.subscriptionList[index]
-                                ['discription_two'];
-                            desc3 = widget.subscriptionList[index]
-                                ['discription_three'];
-                            basePrice = value.toString();
-                            MainPrice = widget.subscriptionList[index]
-                                ['monthy_discounted_price'];
-                          });
-                          print(
-                              'selectedIndex is ===> ${selectedCardIndex} and title is ${selectedTitle}');
-                        },
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              side: BorderSide(
-                                  color: selectedCardIndex == index
-                                      ? grad2Color
-                                      : Colors.transparent,
-                                  width: 4.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 12.0, right: 12.0, bottom: 12.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+      ListView.builder(
+        shrinkWrap: true,
+          reverse: true,
+          itemCount: widget.subscriptionList.length,
+          itemBuilder: (context, index) {
+            int value = int.parse(widget.subscriptionList[index]["price"]);
+            return Padding(
+                padding:
+                    const EdgeInsets.only(left: 12, right: 12, bottom: 5),
+                child: InkWell(
+                    onTap: () {
+                      setState(() {
+                  if( widget.subscriptionList[index]
+                  ['monthy_discounted_price'] == "0"){
+                    isSelected = false;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Upgrade your plan")));
+                  }
+                  else{
+                    isSelected = true;
+                    selectedCardIndex = index;
+                    selectedTitle =
+                    widget.subscriptionList[index]['title'];
+                    desc1 = widget.subscriptionList[index]
+                    ['discription_one'];
+                    desc2 = widget.subscriptionList[index]
+                    ['discription_two'];
+                    desc3 = widget.subscriptionList[index]
+                    ['discription_three'];
+                    basePrice = value.toString();
+                    MainPrice = widget.subscriptionList[index]
+                    ['monthy_discounted_price'];
+                  }
+                      }
+                      );
+                      print(
+                          'selectedIndex is ===> ${selectedCardIndex} and title is ${selectedTitle}');
+                    },
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          side: BorderSide(
+                              color: selectedCardIndex == index
+                                  ? grad2Color
+                                  : Colors.transparent,
+                              width: 4.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 12.0, right: 12.0, bottom: 12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  Text(
+                                    widget.subscriptionList[index]["title"],
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Column(
                                     children: [
-                                      Text(
-                                        widget.subscriptionList[index]["title"],
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Column(
+                                      Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                widget.subscriptionList[index]
-                                                    ["monthy_discounted_price"],
-                                                style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.red,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              widget.subscriptionList[index][
-                                                          "monthy_discounted_price"] !=
-                                                      "free"
-                                                  ? Text(
-                                                      "SAR",
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  : Text("")
-                                            ],
-                                          ),
                                           Text(
-                                            value.toString(),
+                                            widget.subscriptionList[index]
+                                                ["monthy_discounted_price"] == "0" ? "FREE" : widget.subscriptionList[index]
+                                            ["monthy_discounted_price"],
                                             style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                decorationColor: Colors.red,
+                                                fontSize: 25,
+                                                color: Colors.red,
+                                                fontWeight:
+                                                    FontWeight.bold),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          widget.subscriptionList[index]
+                                          ["monthy_discounted_price"] == "0" ?Text(
+                                            "",
+                                            style: TextStyle(
                                                 fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ) :   Text(
+                                            "SAR",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ],
+                                      ),
+                                      Text(
+                                        value.toString(),
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            decorationColor: Colors.red,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_circle_outline,
-                                            color: Colors.black,
-                                            size: 15.0,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            widget.subscriptionList[index]
-                                                ["discription_one"],
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_circle_outline,
-                                            color: Colors.black,
-                                            size: 15.0,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            widget.subscriptionList[index]
-                                                ["discription_two"],
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_circle_outline,
-                                            color: Colors.black,
-                                            size: 15.0,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            widget.subscriptionList[index]
-                                                ["discription_three"],
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
                                 ],
                               ),
-                            ))));
-              })),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.black,
+                                        size: 15.0,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        widget.subscriptionList[index]
+                                            ["discription_one"],
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.black,
+                                        size: 15.0,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        widget.subscriptionList[index]
+                                            ["discription_two"],
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.black,
+                                        size: 15.0,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        widget.subscriptionList[index]
+                                            ["discription_three"],
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ))));
+          }),
       isSelected == true
           ? Consumer<PaymentProviderFatoora>(
               builder: (contexty, myfatoora, snapshot) {
@@ -424,17 +434,10 @@ class _MonthlyDataState extends State<MonthlyData> {
 
                   if (response.status.toString() == 'PaymentStatus.Success') {
                     print("payamnet==>");
-
-                    //  context.read<CartProvider>().setProgress(true);
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                     await sendSubscriptionData(
                         subscriptionName: selectedTitle.toString(),
                         subscriptionId: selectedCardIndex.toString(),
                         transactionId: response.paymentId.toString());
-                    // await updateOrderStatus(
-                    //   orderID: ORDERID, //orderId,
-                    //   status: "received",
-                    // );
                     addTransaction(
                       response.paymentId,
                       orderID,
@@ -455,8 +458,7 @@ class _MonthlyDataState extends State<MonthlyData> {
                     print("erroooeer " +
                         response.url.toString() +
                         response.isError.toString());
-                  }
-                  ;
+                  };
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20),
@@ -520,8 +522,8 @@ print("parmetes and response ${parameter} }");
             if (redirect) {
               // context.read<UserProvider>().setCartCount('0');
 
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Home()));
+              // Navigator.pushReplacement(
+              //     context, MaterialPageRoute(builder: (context) => Home()));
               print("successfull");
             }
           } else {

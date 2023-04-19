@@ -8,6 +8,7 @@ import 'package:sellermultivendor/Screen/Subscription/plans/monthly.dart';
 import 'package:sellermultivendor/Widget/appBar.dart';
 import 'package:http/http.dart' as http;
 import 'package:sellermultivendor/Widget/parameterString.dart';
+import 'package:sellermultivendor/Widget/snackbar.dart';
 
 import '../../../Provider/settingProvider.dart';
 import '../../../Widget/api.dart';
@@ -61,6 +62,7 @@ class _SelectedSubscriptionHalfYealryState extends State<SelectedSubscriptionHal
     if (response.statusCode == 200) {
 
       // API call successful
+      setSnackbar("Congratulation you have successfully subscribed", context);
       print('Subscription data sent successfully');
       setState(() {
         _isLoading = false;
@@ -328,7 +330,8 @@ class _SelectedSubscriptionHalfYealryState extends State<SelectedSubscriptionHal
                   onTap: (){
 
                     sendSubscriptionData();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 
                   },
                   child: Container(

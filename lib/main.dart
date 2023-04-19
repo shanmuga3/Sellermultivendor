@@ -45,6 +45,7 @@ import 'Screen/Campaign/provider/providers.dart';
 import 'Screen/SplashScreen/splashScreen.dart';
 import 'Screen/Subscription/provider/subscriptionProvider.dart';
 import 'Screen/Subscription/provider/tabProvider.dart';
+import 'Screen/completeinfo/newform/city__provider.dart';
 
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -189,6 +190,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => SystemProviderNew()),
         ChangeNotifierProvider<PaymentProviderFatoora>(
             create: (context) => PaymentProviderFatoora()),
+        ChangeNotifierProvider<CityProvider>(
+            create: (context) => CityProvider()),
 
       ],
       child: MaterialApp(

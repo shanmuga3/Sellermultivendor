@@ -39,6 +39,7 @@ class HomeProvider extends ChangeNotifier {
       catCountList = [],
       catList = [],
       weeks = [];
+
   get getCurrentStatus => _systemProviderPolicyStatus;
 
   changeStatus(HomeProviderStatus status) {
@@ -70,7 +71,10 @@ class HomeProvider extends ChangeNotifier {
       totalsoldOutCount = count['count_products_sold_out_status'];
       totallowStockCount = count["count_products_low_status"];
       totalcustCount = count["user_counter"];
-      delPermission = count["permissions"]['assign_delivery_boy'];
+      permission = count["permissions"];
+      permission != null
+          ? delPermission = count["permissions"]['assign_delivery_boy']
+          : delPermission = "1";
       overallSale = getStatics['earnings'][0]["overall_sale"];
       weekEarning = getStatics['earnings'][0]["weekly_earnings"]['total_sale'];
       days = getStatics['earnings'][0]["daily_earnings"]['day'];
@@ -78,13 +82,21 @@ class HomeProvider extends ChangeNotifier {
       months = getStatics['earnings'][0]["monthly_earnings"]['month_name'];
       monthEarning =
           getStatics['earnings'][0]["monthly_earnings"]['total_sale'];
-      customerViewPermission = () {
-        if (count["permissions"]['customer_privacy'] == "1") {
+      if (permission != null) {
+        customerViewPermission = () {
+          if (count["permissions"]['customer_privacy'] == "1") {
+            print("hereeeee => 1");
+            return true;
+          } else {
+            return false;
+          }
+        }();
+      } else {
+        customerViewPermission = () {
           return true;
-        } else {
-          return false;
-        }
-      }();
+        }();
+      }
+
       weeks = getStatics['earnings'][0]["weekly_earnings"]['week'];
       var temp = getStatics['category_wise_product_count'];
       if (temp.toString() != "[]") {
@@ -99,7 +111,7 @@ class HomeProvider extends ChangeNotifier {
       changeStatus(HomeProviderStatus.isSuccsess);
     } catch (e) {
       errorMessage = e.toString();
-
+      print("erroorr msg ${errorMessage}");
       changeStatus(HomeProviderStatus.isFailure);
     }
   }

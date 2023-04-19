@@ -109,11 +109,15 @@ class _SellerRegisterState extends State<SellerRegister>
           request.headers.addAll(headers);
           request.fields[MOBILE] = widget.mobileno.toString();
           request.fields[Name] = nameController.text.toString() ;
-          request.fields["user_id"] =  context.read<SettingProvider>().CUR_USERID!;
+        //  request.fields["user_id"] =  context.read<SettingProvider>().CUR_USERID!;
           request.fields[StoreName] = _storename.text.toString();
           request.fields['business_type'] = _selectedTypeOfBusiness.toString();
           request.fields['category_name'] = _selectedCategory.toString();
+          request.fields[pan_number] = "";
           //request.fields[Mobile] = mobile!;
+          request.fields[Address] = "";
+          request.fields[tax_name] = "";
+          request.fields[tax_number] = "";
           request.fields[Password] = password!;
           request.fields[EmailText] = email!;
           request.fields[ConfirmPassword] = confirmpassword!;
@@ -140,13 +144,18 @@ class _SellerRegisterState extends State<SellerRegister>
           if (!error) {
             if(passwordController.text.toString() == confirmPasswordController.text.toString()){
               Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-              Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
+              Future.delayed(Duration(seconds: 2)).then((value) => setSnackbar("Seller registered successfully",context));
+           //   Future.delayed(Duration(seconds: 2)).then((value) => showMsgDialog(msg!));
               await buttonController!.reverse();
           }
             else{
               showDialog(context: context, builder: (context) => AlertDialog(
                 content: Text("Password does not matched !"),
-              ));
+
+              )
+
+              );
+              await buttonController!.reverse();
             }
 
           } else {
@@ -159,10 +168,6 @@ class _SellerRegisterState extends State<SellerRegister>
             context,
           );
         }
-    //  }
-     // else{
-
-    //  }
 
     } else {
       if (mounted) {
@@ -345,14 +350,12 @@ class _SellerRegisterState extends State<SellerRegister>
                   getLogo(),
                   setSignInLabel(),
                   setName(),
+                  setMobileNo(),
                   storeName(),
 
-                  setMobileNo(),
-                  //   phnnumber(),
                   setEmail(),
                   setPass(),
                   confirmPassword(),
-
                   typeofBusiness(),
                   category(),
                   storeLogo(),
@@ -532,23 +535,29 @@ storeLogo(){
             });
           }
         },
-        child: Container(
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1.0,
-              color: Colors.grey,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Upload Store Logo :"),
+            Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1.0,
+                  color: Colors.grey,
+                ),
+              ),
+              child: _storeLogo == null
+                  ? Center(
+                child: Text('Tap to upload store logo',style: TextStyle(fontSize: 10),),
+              )
+                  : Image.file(
+                _storeLogo!,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: _storeLogo == null
-              ? Center(
-            child: Text('Tap to upload store logo'),
-          )
-              : Image.file(
-            _storeLogo!,
-            fit: BoxFit.cover,
-          ),
+          ],
         ),
       ),
     );
@@ -624,6 +633,12 @@ storeLogo(){
             color: lightBlack2,
             fontWeight: FontWeight.normal,
           ),),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "    Please select a type of business";
+            }
+            return null;
+          },
           value: _selectedTypeOfBusiness.isNotEmpty
               ? _selectedTypeOfBusiness
               : null,
@@ -665,6 +680,12 @@ storeLogo(){
                       color: lightBlack2,
                       fontWeight: FontWeight.normal,
                     ),),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "     Please select a category";
+                      }
+                      return null;
+                    },
                     value:
                     dropdownValue.isNotEmpty ? dropdownValue : null,
                     items: data.categoryName.map((item) {
@@ -756,38 +777,37 @@ storeLogo(){
 
   setMobileNo() {
     return Container(
+      decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.grey,
+          width: 0.5,
+        ),
+      )
+      ),
       width: MediaQuery.of(context).size.width * 0.85,
       padding: const EdgeInsets.only(
         top: 15.0,
       ),
       child: TextFormField(
-        onFieldSubmitted: (v) {
-          FocusScope.of(context).requestFocus(monumberFocus);
-        },
-        keyboardType: TextInputType.number,
-        controller: mobileController,
+        enabled: false,
         style: const TextStyle(
           color: fontColor,
           fontWeight: FontWeight.normal,
         ),
-        focusNode: monumberFocus,
-        textInputAction: TextInputAction.next,
-        inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        validator: (val) => StringValidation.validateMob(val!, context),
-        onSaved: (String? value) {
-          mobile = value;
-        },
+
         decoration: InputDecoration(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(color: primary),
-            borderRadius: BorderRadius.circular(circularBorderRadius7),
+          border: UnderlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.circular(circularBorderRadius7),
           ),
+
           prefixIcon: const Icon(
             Icons.phone_android,
             color: lightBlack2,
             size: 20,
           ),
-          hintText: getTranslated(context, "Mobile Number")!,
+          hintText: "${widget.mobileno.toString()}",
           hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
             color: lightBlack2,
             fontWeight: FontWeight.normal,
@@ -935,6 +955,8 @@ storeLogo(){
       ),
     );
   }
+
+
 }
 
 

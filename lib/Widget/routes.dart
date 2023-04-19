@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sellermultivendor/Screen/HomePage/home.dart';
 import '../Screen/AddProduct/Add_Product.dart';
 import '../Screen/Authentication/NewSellerRegistration.dart';
 import '../Screen/Authentication/SellerRegistration.dart';
@@ -16,6 +17,14 @@ class Routes {
   }
 
   // simple routes
+  static navigateToHome(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Home(),
+      ),
+    );
+  }
   static navigateToMyApp(BuildContext context) {
     Navigator.push(
       context,
